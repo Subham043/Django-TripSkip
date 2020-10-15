@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% block css%}
+<link rel="stylesheet" type="text/css" href="{% static 'css/hotelsearch2.css'%}">
+{% endblock%}
+
+{%block onload%}
+onscroll="myScrollFunction()"
+{%endblock%}
+
+{% block content %}
+
+<div class="container-fluid result-container">
+	<h3>Showing {{numHotel}} Hotels in {{destname}}</h3>
+	<h5 class="price"><i class="fas fa-tag"></i> Showing Price/Night for 1 Room</h5>
+	<div class="container result-div">
+		
+		<div class="row">
+
+			<div class="filter-div" id="fixed_div">
+				<p class="filter-head">Filters</p>
+				<p class="filter-price">Price Range</p>
+				<form name="price">
+					<input type="checkbox" class="pricerange" name="pricerange" onclick = "filterPrice(price=2000,message='price')"> <label class="pricerangelabel">Less than 2000</label><br>
+					<input type="checkbox" class="pricerange" name="pricerange" onclick = "filterPrice(price=4000,message=2001)"> <label class="pricerangelabel">2001 - 4000</label><br>
+					<input type="checkbox" class="pricerange" name="pricerange" onclick = "filterPrice(price=7000,message=4001)"> <label class="pricerangelabel">4001 - 7000</label><br>
+					<input type="checkbox" class="pricerange" name="pricerange" onclick = "filterPrice(price=10000,message=7001)"> <label class="pricerangelabel">7001 - 10000</label><br>
+					<input type="checkbox" class="pricerange" name="pricerange" onclick = "filterPrice(price=10000,message='price')"> <label class="pricerangelabel">Greater than 10000</label><br>
+				</form>
+				<p class="filter-price">Hotel Stars</p>
+				<form name="star">
+					<input type="checkbox" class="pricerange" name="starrange" onclick = "filterPrice(price=5,message='star')"> <label class="pricerangelabel"><i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i></label><br>
+					<input type="checkbox" class="pricerange" name="starrange" onclick = "filterPrice(price=4,message='star')"> <label class="pricerangelabel"><i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i></label><br>
+					<input type="checkbox" class="pricerange" name="starrange" onclick = "filterPrice(price=3,message='star')"> <label class="pricerangelabel"><i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i></label><br>
+					<input type="checkbox" class="pricerange" name="starrange" onclick = "filterPrice(price=2,message='star')"> <label class="pricerangelabel"><i class="fas fa-star"></i> <i class="fas fa-star"></i></label><br>
+					<input type="checkbox" class="pricerange" name="starrange" onclick = "filterPrice(price=1,message='star')"> <label class="pricerangelabel"><i class="fas fa-star"></i></label><br>
+				</form>
+				<p class="filter-price">Amenities</p>
+				<form name="amenities">
+					<input type="checkbox" class="pricerange" name="amenrange" onclick = "filterPrice(price='Bar',message='amenities')"> <label class="pricerangelabel">Bar</label><br>
+					<input type="checkbox" class="pricerange" name="amenrange" onclick = "filterPrice(price='Gym',message='amenities')"> <label class="pricerangelabel">Gym</label><br>
+					<input type="checkbox" class="pricerange" name="amenrange" onclick = "filterPrice(price='Parking',message='amenities')"> <label class="pricerangelabel">Parking</label><br>
+					<input type="checkbox" class="pricerange" name="amenrange" onclick = "filterPrice(price='Room Service',message='amenities')"> <label class="pricerangelabel">Room Service</label><br>
+					<input type="checkbox" class="pricerange" name="amenrange" onclick = "filterPrice(price='WiFi',message='amenities')"> <label class="pricerangelabel">WiFi</label><br>
+					<input type="checkbox" class="pricerange" name="amenrange" onclick = "filterPrice(price='Swimming Pool',message='amenities')"> <label class="pricerangelabel">Swimming Pool</label><br>
+				</form>
+			</div>	
+
+			<div class="searchresult-div">
+				
+				{% for i in hotelList %}
+				<div class="container hotel-result">
+					<div class="hotel-pic">
+						<img src="{{i.image.url}}">
+					</div>
+					<div class="hotel-desc">
+						<p class="rating">{{i.star}} <i class="fas fa-star"></i> Hotel</p>
+						<h5>{{i.name}}</h5>
+						<p class="loc"><i class="fas fa-map-marker-alt"></i> {{i.location}}</p>
+						<p class="amenities"><i class="fas fa-wifi"></i> {{i.amen1}}</p>
+						<p class="amenities"><i class="fas fa-concierge-bell"></i> {{i.amen2}}</p>
+						<p class="amenities"><i class="fas fa-parking"></i> {{i.amen3}}</p>
+						{% if i.amen4 == 'Swimming Pool' %}
+						<p class="amenities"><i class="fas fa-swimming-pool"></i> {{i.amen4}}</p>
+						{% elif i.amen4 == 'Gym' %}
+						<p class="amenities"><i class="fas fa-dumbbell"></i> {{i.amen4}}</p>
+						{% elif i.amen4 == 'Bar' %}
+						<p class="amenities"><i class="fas fa-wine-glass-alt"></i> {{i.amen4}}</p>
+						{% endif %}
+					</div>
+					<div class="hotel-btn">
+						<p>Starting From</p>
+						<h4>Rs.{{i.price}}</h4>
+						<a href="/hotelbook/{{destname}}/{{i.id}}/" id="room-btn" class="room-btn">Select Room</a>
+					</div>
+				</div>
+				{% endfor %}
+			</div>
+		</div>
+
+	</div>
+</div>
+<!--result end -->
+
+
+{% endblock %}
+
+{% block js %}
+
+<script type="text/javascript">
+	function myScrollFunction() {
+	for(i=0;i<90;i++){
+		document.getElementById('fixed_div').style.top = i+"px";
+
+	}
+	
+}
+	var retrievedObject = localStorage.getItem('HotelSearchDetails');
+	var HotelSearchDetails = JSON.parse(retrievedObject);
+	console.log(HotelSearchDetails)
+
+	function filterPrice(price,message){
+		window.location.href = '/hotelsearchfilter/{{destname}}/'+message+'/'+price+'/';
+	}
+
+
+
+</script>
+{% endblock %}

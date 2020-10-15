@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% block css%}
+<link rel="stylesheet" type="text/css" href="{% static 'css/indexstyle2.css'%}">
+{% endblock%}
+
+{%block onload%}
+{% load crispy_forms_tags %}
+
+{%endblock%}
+
+{% block content %}
+<form method="POST" class="form-group" style="margin-top: 90px;">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <p>Don't have an account? <a href="/signup/">Create here</a></p>
+    <button type="submit" class="btn btn-success">Login</button>
+  </form>
+{% endblock %}

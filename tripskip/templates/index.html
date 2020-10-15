@@ -1,0 +1,453 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% block css%}
+<link rel="stylesheet" type="text/css" href="{% static 'css/indexstyle2.css'%}">
+{% endblock%}
+
+{%block onload%}
+onload="myFunction()"
+{%endblock%}
+
+{% block content %}
+<div class="container-fluid search-content">
+	<div class="container inner-search">
+		<div class="row">
+			<div class="col-6 search-body">
+				<h5>Book Flight Tickets</h5>
+			      <input type="radio" name="trip" id="oneway" checked><label class="radio-label">One Way</label>
+			      <input type="radio" name="trip" id="roundtrip"><label class="radio-label">Round Trip</label><br><br>
+			      
+	          <input type="text" list="From" id="FromInput" class="dest" placeholder="From" />
+	          <datalist id="From">
+	          	{% for i in airport %}
+	            <option>{{i.airport}} {{i.airportcode}}</option>
+	            {% endfor %}
+	          </datalist>
+	          <span><i class="fas fa-exchange-alt"></i></span>
+	          <input type="text" list="To" id="ToInput" class="dest" placeholder="To" />
+	          <datalist id="To">
+	           {% for i in airport %}
+	            <option>{{i.airport}} {{i.airportcode}}</option>
+	            {% endfor %}
+	          </datalist>
+	          <span id="noti" style="display: none;">Field can not be left blank</span><br>
+	          <span id="noti1" style="display: none;">Destination and Arrival can't be same</span>
+	           <br><label for="Departure_Date" id="Departure_Date_label">Departure Date:</label><br>
+	           <input type="date" id="Departure_Date" name="birthday">
+	           <br><label for="Return_Date" id="Return_Date_label">Return Date:</label><br>
+	           <input type="date" id="Return_Date" name="birthday" disabled>
+	           <br><label for="travelClass" id="travelClassLabel">Traveller, Class:</label><br>
+	           <input type="text" name="travelClass" class="input_design" id="travelClass" value="1 Traveller, Economy" readonly><br>
+	           <div class="travelClassEditor" id="travelClassEditor">
+	           		<p><label>Adults:</label>&nbsp;&nbsp;&nbsp;&nbsp; <button class="minus"  id="AValueMinus">-</button> <span class="AValue" id="AValue">1</span> <button class="add" id="AValueAdd">+</button> <span class="AValueDetails">(Above 12 years)</span></p>
+	           		<p><label>Children:</label> <button class="minus"  id="CValueMinus">-</button> <span class="AValue"   id="CValue">0</span> <button class="add"   id="CValueAdd">+</button> <span class="AValueDetails">(2-12 years)</span></p>
+	           		<p><label>Infants:</label>&nbsp;&nbsp;&nbsp;&nbsp; <button class="minus" id="IValueMinus">-</button> <span class="AValue" id="IValue">0</span> <button class="add" id="IValueAdd">+</button> <span class="AValueDetails">(Below 2 years)</span></p>
+	           		<hr>
+	           		<input type="radio" name="travelClassRadio" id="travelClassRadio1" value="Economy" checked><label class="travelClassRadio-label">Economy</label><br>
+			      <input type="radio" name="travelClassRadio" id="travelClassRadio2" value="Premium Economy" ><label class="travelClassRadio-label">Premium Economy</label><br>
+			      <input type="radio" name="travelClassRadio" id="travelClassRadio3" value="Business Class" ><label class="travelClassRadio-label">Business Class</label>
+			      <hr>
+			      <button id="done-btn">Done</button>
+	           </div>
+	           <input type="submit" name="submit" id="submit" value="search">
+        	</div>
+
+        	 <div class="col-6 search-body-pic">
+	          <img src="{{indexSearch.image.url}}">
+	        </div>
+
+		</div>
+	</div>
+</div>
+<!--end of search box-->
+
+<div class="container-fluid offer-container">
+	<h3>Offers</h3>
+	<div class="row">
+		{% for i in offer %}
+		<div class="col-md-3 offer-content" id="offerclick{{i.id}}">
+			<img src="{{i.image.url}}">
+			<h2>Use {{i.promo}}</h2>
+			<p>{{i.desc}}</p>
+		</div>
+		{% endfor %}
+		
+	</div>
+	
+</div>
+<!--end of offer-->
+
+
+<div class="container-fluid routes-container">
+	<h3>Top Domestic routes</h3>
+	<div class="container routes-content">
+		{% for i in route %}
+		<div class="row routes-row">
+			<div class="col-md-6 routes-row-content">
+				<p><span id="depart0{{i.id}}">{{i.departure}}</span> - <span id="depart1{{i.id}}">{{i.arrival}}</span></p>
+				<a href="/toproute/{{i.id}}/{{i.departure}}/{{i.arrival}}/" class="newAbtn" id="newAbtn00{{i.id}}">Search Flight</a>
+			</div>
+			<div class="col-md-6 routes-row-content">
+				<p><span id="depart2{{i.id}}">{{i.arrival}}</span> - <span id="depart3{{i.id}}">{{i.departure}}</span></p>
+				<a href="/toproute/{{i.id}}/{{i.arrival}}/{{i.departure}}/" class="newAbtn" id="newAbtn01{{i.id}}">Search Flight</a>
+			</div>
+		</div>
+		
+		{% endfor %}
+
+	</div>
+</div>
+<!--end of routes-->
+
+
+<div class="container-fluid info-container">
+	<h3>Book Flight Tickets Online on TripSkip</h3>
+	<div class="container info-content">
+		<p>Online flight ticket bookings just got easier and quicker. On <a href="/">TripSkip</a>, you can now book your flight tickets in minutes, from anywhere, at any time! Enjoy a hassle-free flight ticket booking experience by getting your tickets booked securely, in minutes.</p>
+		<p>Book <a href="/">domestic flight tickets</a> to your favourite destinations including Goa, Delhi, Bengaluru, Hyderabad, Chennai and Kolkata from all leading domestic airline operators. You no more have to rely on travel agents or middlemen for the booking of your flight tickets. <a href="/">TripSkip</a> is the complete solution for all your concerns related to online flight ticket bookings.</p>
+		<p>You can book your flight tickets from domestic operators including Indigo, SpiceJet , Jet Airways, Vistara Airlines, AirAsia and Air India.</p>
+		<p><a href="/">#TripSkip</a> and enjoy a relaxed flight ticket booking experience.</p>
+		<h6>Why Book Flight Tickets With TripSkip</h6>
+		<p><a href="/">TripSkip</a> is one of the most reliable online platforms for flight ticket bookings. We offer online booking facilities for both domestic flight ticket bookings. There are several reasons that make us among the best online flight ticket booking platforms in India. </p>
+		<h6>Easy & Quick Flight Ticket Booking</h6>
+		<p>With <a href="/">TripSkip</a>, you can forget about all the hassles that come with flight ticket bookings. Book your tickets from the comfort of your home, in just a few clicks!</p>
+		<h6>Exciting Cashback Offers</h6>
+		<p><a href="/offer/2">FLYAXIS</a> is one of the cashback offers that you should not miss. Keep checking our website and avail amazing cashbacks during each FLYDAY, which also has another delightful offer <a href="/">FLASHSALE</a> that happens during an hour of the FLYDAY sale. With our other exclusive partner offers, bank offers, seasonal offers and Travel Card, you can now avail <a href="/">amazing cashbacks and other offers</a> on each flight ticket booking done on our platform.</p>
+		<h6>Travel Insurance</h6>
+		<p>Your travel can be insured with the help of our travel insurance coverage offered at a minimal cost. You can get yourself insured against accident, loss of baggage, flight delay or cancellation, and other unforeseen circumstances.</p>
+		<h6>Free Cancellation & Instant Refunds</h6>
+		<p>Once your flight tickets are cancelled, the amount is instantly refunded to your source account, ensuring that you don’t face any delay in getting your amount back.</p>
+		<h6>Lowest Fares Assured</h6>
+		<p><a href="/">TripSkip</a> assures you best prices for your flight ticket bookings. Whether it is a one-way ticket or a round-trip that you’re booking for, we have the best fares for you! To book the tickets, you can choose a payment option of your choice i.e. Debit/Credit, Net Banking, Paytm Wallet or other UPI payment options.</p>
+		<h6>24/7 Customer Assistance</h6>
+		<p>For any kind of queries and concerns related to online flight ticket bookings, our dedicated team of customer support is available 24/7 for your assistance. You can reach out to us on 0120-4880-880 on any clarifications related to flight ticket bookings on <a href="/">TripSkip</a>.</p>
+	</div>
+</div>
+<!--end of info-->
+
+
+<div class="container-fluid faq-container">
+	<h3>FAQs Related to Flight Ticket Bookings With TripSkip</h3>
+	<div class="container faq-content">
+		<div class="accordion" id="accordionExample">
+			{%for i in faq%}
+			{% if i.num == "One"%}
+		  <div class="card">
+		    <div class="card-header" id="heading{{i.num}}">
+		      <h2 class="mb-0">
+		        <button class="btn btn-link btn-block text-left faq-btn" type="button" data-toggle="collapse" data-target="#collapse{{i.num}}" aria-expanded="true" aria-controls="collapse{{i.num}}">
+		          {{i.question}}
+		        </button>
+		      </h2>
+		    </div>
+
+		    <div id="collapse{{i.num}}" class="collapse show" aria-labelledby="heading{{i.num}}" data-parent="#accordionExample">
+		      <div class="card-body">
+		       {{i.answer}}
+		      </div>
+		    </div>
+		  </div>
+		  {% else %}
+		  <div class="card">
+		    <div class="card-header" id="heading{{i.num}}">
+		      <h2 class="mb-0">
+		        <button class="btn btn-link btn-block text-left collapsed faq-btn" type="button" data-toggle="collapse" data-target="#collapse{{i.num}}" aria-expanded="false" aria-controls="collapse{{i.num}}">
+		          {{i.question}}
+		        </button>
+		      </h2>
+		    </div>
+		    <div id="collapse{{i.num}}" class="collapse" aria-labelledby="heading{{i.num}}" data-parent="#accordionExample">
+		      <div class="card-body">
+		        {{i.answer}}
+		      </div>
+		    </div>
+		  </div>
+		  {% endif %}
+		  {% endfor%}
+		</div>
+
+
+	</div>
+</div>
+<!--end of faq-->
+
+
+{% endblock %}
+
+{% block js %}
+<script type="text/javascript">
+	var offerclick1 = document.getElementById('offerclick1');
+	offerclick1.addEventListener("click", offerPage1);
+	function offerPage1() {
+	  window.location.href = "/offer/1";
+	}
+
+	var offerclick2 = document.getElementById('offerclick2');
+	offerclick2.addEventListener("click", offerPage2);
+	function offerPage2() {
+	  window.location.href = "/offer/2";
+	}
+
+
+	var travelClass = document.getElementById('travelClass');
+	var travelClassEditor = document.getElementById('travelClassEditor');
+	var done_btn = document.getElementById('done-btn');
+
+	travelClass.addEventListener("click", displaytravelClass);
+
+	function displaytravelClass() {
+	  travelClassEditor.style.display = "block";
+	  travelClass.style.borderBottom = "2px solid #5f74f9";
+	}
+
+	done_btn.addEventListener("click", hidetravelClass);
+
+	function hidetravelClass() {
+	  travelClassEditor.style.display = "none";
+	} 
+
+	var roundtrip = document.getElementById('roundtrip')
+	var oneway = document.getElementById('oneway')
+
+	roundtrip.addEventListener("click", displayReturnDate);
+
+	function displayReturnDate() {
+	  document.getElementById('Return_Date').disabled = false;
+	}
+
+	oneway.addEventListener("click", hideReturnDate);
+
+	function hideReturnDate() {
+	  document.getElementById('Return_Date').disabled = true;
+	}
+
+	var re = /\d/;
+	if (!re.test(travelClass.value[1])) {
+	  travelClassInputNum = travelClass.value[0] + travelClass.value[1]
+	  travelClassInput = parseInt(travelClassInputNum)
+	} else {
+	  travelClassInput = travelClass.value[0];
+	}
+
+	var AValueAdd = document.getElementById('AValueAdd');
+	var AValueMinus = document.getElementById('AValueMinus');
+	var CValueAdd = document.getElementById('CValueAdd');
+	var CValueMinus = document.getElementById('CValueMinus');
+	var IValueAdd = document.getElementById('IValueAdd');
+	var IValueMinus = document.getElementById('IValueMinus');
+	var Departure_Date = document.getElementById('Departure_Date')
+	status = 'Economy';
+	AclickADD = 0;
+	CclickADD = -1;
+	IclickADD = -1;
+
+	AValueAdd.addEventListener("click", IncAValue);
+
+	function IncAValue() {
+		if (travelClassInput<8) {
+			inc = document.getElementById('AValue').innerHTML
+			 incValue = parseInt(inc)+1;
+			 AclickADD++;
+			 document.getElementById('AValue').innerHTML = incValue;
+			 travelClassInput = travelClassInput + 1;
+			 console.log(travelClassInput)
+			 NewtravelClassInput = travelClassInput + ' Traveller, ' + status;
+			 travelClass.value = NewtravelClassInput
+		}
+	 
+	}
+
+	AValueMinus.addEventListener("click", DecAValue);
+
+	function DecAValue() {
+	 if(AclickADD>0) {
+	 	inc = document.getElementById('AValue').innerHTML
+	 	incValue = parseInt(inc)-1;
+	  document.getElementById('AValue').innerHTML = incValue;
+	  AclickADD--;
+	  travelClassInput = travelClassInput - 1;
+		 if (travelClassInput <= 0) {
+		  NewtravelClassInput = 1 + ' Traveller, ' + status;
+		   travelClass.value = NewtravelClassInput
+		 } else {
+		  NewtravelClassInput = travelClassInput + ' Traveller, ' + status;
+		 travelClass.value = NewtravelClassInput
+		 }
+	 }
+	 
+	}
+
+	CValueAdd.addEventListener("click", IncCValue);
+
+	function IncCValue() {
+		if (travelClassInput<8) {
+			inc = document.getElementById('CValue').innerHTML
+			 incValue = parseInt(inc)+1;
+			 CclickADD++;
+			 document.getElementById('CValue').innerHTML = incValue;
+			 travelClassInput = travelClassInput + 1;
+			 NewtravelClassInput = travelClassInput + ' Traveller, ' + status;
+			 travelClass.value = NewtravelClassInput
+		}
+	 
+	}
+
+	CValueMinus.addEventListener("click", DecCValue);
+
+	function DecCValue() {
+	 if(CclickADD>-1) {
+	 	inc = document.getElementById('CValue').innerHTML
+	 	incValue = parseInt(inc)-1;
+	  document.getElementById('CValue').innerHTML = incValue;
+	  CclickADD--;
+	  travelClassInput = travelClassInput - 1;
+		 if (travelClassInput <= 0) {
+		  NewtravelClassInput = 1 + ' Traveller, ' + status;
+		   travelClass.value = NewtravelClassInput
+		 } else {
+		  NewtravelClassInput = travelClassInput + ' Traveller, ' + status;
+		 travelClass.value = NewtravelClassInput
+		 }
+	 }
+	  
+	}
+
+	IValueAdd.addEventListener("click", IncIValue);
+
+	function IncIValue() {
+		if (travelClassInput<8) {
+			inc = document.getElementById('IValue').innerHTML
+			 incValue = parseInt(inc)+1;
+			 IclickADD++;
+			 document.getElementById('IValue').innerHTML = incValue;
+			 travelClassInput = travelClassInput + 1;
+			 NewtravelClassInput = travelClassInput + ' Traveller, ' + status;
+			 travelClass.value = NewtravelClassInput
+		}
+	 
+	}
+
+	IValueMinus.addEventListener("click", DecIValue);
+
+	function DecIValue() {
+	 if(IclickADD>-1) {
+	 	inc = document.getElementById('IValue').innerHTML
+	 	incValue = parseInt(inc)-1;
+	  document.getElementById('IValue').innerHTML = incValue;
+	  IclickADD--;
+	  travelClassInput = travelClassInput - 1;
+		 if (travelClassInput <= 0) {
+		  NewtravelClassInput = 1 + ' Traveller, ' + status;
+		   travelClass.value = NewtravelClassInput
+		 } else {
+		  NewtravelClassInput = travelClassInput + ' Traveller, ' + status;
+		 travelClass.value = NewtravelClassInput
+		 }
+	 }
+	 
+	}
+
+	var travelClassRadio1 = document.getElementById('travelClassRadio1');
+	var travelClassRadio2 = document.getElementById('travelClassRadio2');
+	var travelClassRadio3 = document.getElementById('travelClassRadio3');
+
+	travelClassRadio1.addEventListener("click", TravelClassValue1);
+	travelClassRadio2.addEventListener("click", TravelClassValue2);
+	travelClassRadio3.addEventListener("click", TravelClassValue3);
+
+	function TravelClassValue1() {
+		status = 'Economy';
+	 NewtravelClassInput = travelClassInput + ' Traveller, ' + status;
+	 travelClass.value = NewtravelClassInput
+	}
+	function TravelClassValue2() {
+		status = 'Premium Economy';
+	 NewtravelClassInput = travelClassInput + ' Traveller, ' + status;
+	 travelClass.value = NewtravelClassInput
+	}
+	function TravelClassValue3() {
+		status = 'Business Class';
+	 NewtravelClassInput = travelClassInput + ' Traveller, ' + status;
+	 travelClass.value = NewtravelClassInput
+	}
+
+
+	function myFunction(){
+	  var date = new Date();
+		        month = '' + (date.getMonth() + 1);
+		        day = '' + date.getDate();
+		        year = date.getFullYear();
+
+			    if (month.length < 2) 
+			        month = '0' + month;
+			    if (day.length < 2) 
+			        day = '0' + day;
+
+			    MinDate =  [year, month, day].join('-');
+			  Departure_Date.setAttribute("min", MinDate);
+			  document.getElementById('Return_Date').setAttribute("min", MinDate);
+	  Departure_Date.valueAsDate = date
+	   document.getElementById('Return_Date').valueAsDate = date
+
+	   localStorage.removeItem("flightSearchDetails");
+
+
+	}
+
+
+	var offerclick3 = document.getElementById('offerclick3');
+	offerclick3.addEventListener("click", offerPage3);
+	function offerPage3() {
+	  window.location.href = "/offer/3";
+	}
+
+	var FromInput = document.getElementById('FromInput');
+	var ToInput = document.getElementById('ToInput');
+	var noti = document.getElementById('noti');
+	var submit = document.getElementById('submit')
+	submit.addEventListener("click", SubmitFuncion);
+	function SubmitFuncion(){
+		if (FromInput.value.length == 0) {
+			FromInput.setAttribute("style", "border-bottom: 2px solid red;");
+			noti.setAttribute("style", "display: inline");
+			noti.setAttribute("style", "color: red");
+		}else if (ToInput.value.length == 0) {
+			FromInput.setAttribute("style", "border-bottom: 1px solid grey;");
+			ToInput.setAttribute("style", "border-bottom: 2px solid red;");
+			noti.setAttribute("style", "display: inline");
+			noti.setAttribute("style", "color: red");
+		}else{
+			ToInput.setAttribute("style", "border-bottom: 1px solid grey;");
+			noti.setAttribute("style", "display: none");
+			 flightSearchDetails = {
+				formInput : FromInput.value,
+				toInput : ToInput.value,
+				DeparturDate : Departure_Date.valueAsDate,
+				ArrivalDate : document.getElementById('Return_Date').valueAsDate,
+				travelInput : travelClassInput,
+				Status : status,
+				AValue : document.getElementById('AValue').innerHTML,
+				Aclick : AclickADD,
+				CValue : document.getElementById('CValue').innerHTML,
+				Cclick : CclickADD,
+				IValue : document.getElementById('IValue').innerHTML,
+				Iclick : IclickADD,
+			}
+
+			localStorage.setItem('flightSearchDetails', JSON.stringify(flightSearchDetails));
+
+			window.location.href = '/flightsearch/'+FromInput.value+'/'+ToInput.value+'/'
+
+		}
+		function myScrollFunction(){
+
+		}
+			
+		
+	}
+
+
+	
+</script>
+{% endblock %}

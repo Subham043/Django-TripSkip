@@ -1,0 +1,478 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% block css%}
+<link rel="stylesheet" type="text/css" href="{% static 'css/hotel1.css'%}">
+{% endblock%}
+
+{%block onload%}
+onload="myFunction()"
+{%endblock%}
+
+{% block content %}
+
+<div class="container-fuid hotel-search-container" style="background-image: url({{indexSearch.image.url}}") >
+	<h4>Find Your Perfect Stay!</h4>
+	<p class="p-tag">More than 10,000+ properties to search from</p>
+	<div class="container hotel-search-content">
+		<h5>Book Hotels, Villas and Homestays</h5>
+		<div class="search-content city-div">
+			<label id="city">City:</label><br>
+			<input type="text" list="From" id="FromInput" class="city" placeholder="Enter Your Destination" />
+	          <datalist id="From">
+	          	{% for i in destname %}
+	            <option>{{i.cityname}}</option>
+	            {% endfor %}
+	          </datalist>
+		</div>
+
+		<div class="search-content checkin-div">
+			<label for="Check_In" id="Check_In_label">Check-In:</label><br>
+	        <input type="date" id="Check_In" name="Check_In">
+		</div>
+
+		<div class="search-content span-div">
+			<p><span id="numNight"></span><br>Nights</p>
+		</div>
+
+		<div class="search-content checkout-div">
+			<label for="Check_Out" id="Check_Out_label">Check-Out:</label><br>
+	        <input type="date" id="Check_Out" name="Check_Out">
+		</div>
+
+		<div class="search-content hotelClass-div">
+			<label for="hotelClass" id="hotelClassLabel">Guests, Rooms:</label><br>
+	         <input type="text" name="hotelClass" class="input_design" id="hotelClass" readonly><br>
+	           <div class="hotelClassEditor" id="hotelClassEditor">
+	           		<p><label>No. of Rooms:</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <button class="minus"  id="AValueMinus">-</button> <span class="AValue" id="AValue"></span> <button class="add" id="AValueAdd">+</button></p>
+	           		<p><label>No. of Adults:</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <button class="minus"  id="CValueMinus">-</button> <span class="AValue"   id="CValue"></span> <button class="add"   id="CValueAdd">+</button></p>
+	           		<p><label>No. of Children:</label>&nbsp;&nbsp;&nbsp;&nbsp; <button class="minus" id="IValueMinus">-</button> <span class="AValue" id="IValue"></span> <button class="add" id="IValueAdd">+</button></p><br>
+
+			      <button id="done-btn">Done</button>
+	           </div>
+		</div>
+
+		<div class="search-content submit-div">
+			<input type="submit" name="submit" id="submit" value="search">
+		</div>
+
+	</div>
+</div>
+<!--search hotel end-->
+
+<div class="container-fuid Dest-container">
+	<h3>Book Hotels at Popular Destinations</h3>
+	<div class="container Dest-carousel">
+		<div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+		  <div class="carousel-inner">
+		    <div class="carousel-item active">
+		    	{% for i in hotelCarousel1 %}
+		      <div class="city-car-div" onclick="cityClick{{i.id}} ()">
+		      	<img src="{{i.image.url}}">
+		      	<h5>{{i.cityname}}</h5>
+		      	<p>starting at Rs.{{i.price}}</p>
+		      </div>
+		      
+		      {% endfor %}
+		    </div>
+		    <div class="carousel-item">
+		      
+		    	 {% for i in hotelCarousel2 %}
+			      <div class="city-car-div" onclick="cityClick{{i.id}} ()">
+			      	<img src="{{i.image.url}}">
+			      	<h5>{{i.cityname}}</h5>
+			      	<p>starting at Rs.{{i.price}}</p>
+			      </div>
+			      {% endfor %}
+
+		    </div>
+		    <div class="carousel-item">
+
+		        {% for i in hotelCarousel3 %}
+			      <div class="city-car-div" onclick="cityClick{{i.id}} ()">
+			      	<img src="{{i.image.url}}">
+			      	<h5>{{i.cityname}}</h5>
+			      	<p>starting at Rs.{{i.price}}</p>
+			      </div>
+			      {% endfor %}
+
+		    </div>
+		  </div>
+		  <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+		    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+		    <span class="sr-only">Previous</span>
+		  </a>
+		  <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+		    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+		    <span class="sr-only">Next</span>
+		  </a>
+		</div>
+
+	</div>
+</div>
+
+<!--dest-carousel ends-->
+
+
+<div class="container-fuid info-container">
+	<div class="container info-content">
+		<h5>Find Best Hotels in India on Paytm</h5>
+		<p>Paytm helps you to book your hotels at the comfort of your home, in the most easy and hassle-free manner. From area-specific hotel searches to finding you the right hotels based on your choice of amenities according to your budget, we provide you with the best results for hotels in India, ensuring that you enjoy the best rates on each of your hotel bookings.</p>
+		<h5>Trending Hotel Destinations in India</h5>
+		<ul>
+			<li><a href="/hotelsearch/Mumbai/">Mumbai Hotels</a></li>
+			<li><a href="/hotelsearch/Goa/">Goa Hotels</a></li>
+			<li><a href="/hotelsearch/Delhi/">Delhi Hotels</a></li>
+			<li><a href="/hotelsearch/Kolkata/">Kolkata Hotels</a></li>
+		</ul>
+		<ul>
+			<li><a href="/hotelsearch/Hyderabad/">Hyderabad Hotels</a></li>
+			<li><a href="/hotelsearch/Chennai/">Chennai Hotels</a></li>
+			<li><a href="">Dehradun Hotels</a></li>
+			<li><a href="">Indore Hotels</a></li>
+		</ul>
+		<ul>
+			<li><a href="/hotelsearch/Agartala/">Agartala Hotels</a></li>
+			<li><a href="/hotelsearch/Assam/">Assam Hotels</a></li>
+			<li><a href="/hotelsearch/Ahmedabad/">Ahmedabad Hotels</a></li>
+			<li><a href="/hotelsearch/Indore/">Indore Hotels</a></li>
+		</ul>
+		<h5>Amazing Hotel Deals Online</h5>
+		<p>You can book your hotels here and enjoy amazing Paytm hotel deals and cashbacks on each hotel booking done on the platform. Use our valid promocodes and make the most of the current offers.</p>
+		<h5>Enhanced Hotel Booking Experience Guaranteed</h5>
+		<p>With Paytm by your side, you can be assured of easier and quicker hotel booking experience online. We allow you to search for hotels based on the locality, amenities, price range, star ratings, themes and property types. We ensure that you get what you want, in just a few clicks!</p>
+		<h5>Best Price Assured</h5>
+		<p>One of the major concerns of booking on hotel booking websites will be whether you are offered the best at the best rates available. Forget your worries, and try booking with Paytm. You can not only make sure that the best rates are displayed on the site, you would also find the best stay options that match with your expectations and preferences, allowing you to enjoy a relaxed stay.</p>
+	</div>
+</div>
+<!-- info ends -->
+
+
+<div class="container-fluid faq-container">
+	<h3>FAQs Related to Hotel Ticket Bookings With TripSkip</h3>
+	<div class="container faq-content">
+		<div class="accordion" id="accordionExample">
+			{%for i in faq%}
+			{% if i.num == "One"%}
+		  <div class="card">
+		    <div class="card-header" id="heading{{i.num}}">
+		      <h2 class="mb-0">
+		        <button class="btn btn-link btn-block text-left faq-btn" type="button" data-toggle="collapse" data-target="#collapse{{i.num}}" aria-expanded="true" aria-controls="collapse{{i.num}}">
+		          {{i.question}}
+		        </button>
+		      </h2>
+		    </div>
+
+		    <div id="collapse{{i.num}}" class="collapse show" aria-labelledby="heading{{i.num}}" data-parent="#accordionExample">
+		      <div class="card-body">
+		       {{i.answer}}
+		      </div>
+		    </div>
+		  </div>
+		  {% else %}
+		  <div class="card">
+		    <div class="card-header" id="heading{{i.num}}">
+		      <h2 class="mb-0">
+		        <button class="btn btn-link btn-block text-left collapsed faq-btn" type="button" data-toggle="collapse" data-target="#collapse{{i.num}}" aria-expanded="false" aria-controls="collapse{{i.num}}">
+		          {{i.question}}
+		        </button>
+		      </h2>
+		    </div>
+		    <div id="collapse{{i.num}}" class="collapse" aria-labelledby="heading{{i.num}}" data-parent="#accordionExample">
+		      <div class="card-body">
+		        {{i.answer}}
+		      </div>
+		    </div>
+		  </div>
+		  {% endif %}
+		  {% endfor%}
+
+
+	</div>
+</div>
+</div>
+<!--faq ends -->
+
+
+
+
+
+{% endblock %}
+
+{% block js %}
+<script type="text/javascript">
+
+
+
+var checkIn = document.getElementById('Check_In');
+var checkOut = document.getElementById('Check_Out');
+var hotelClass = document.getElementById('hotelClass');
+var doneBtn = document.getElementById('done-btn');
+
+hotelClass.addEventListener('click', hotelClassDisplay);
+function hotelClassDisplay(){
+	hotelClassEditor.style.display = "block";
+}
+
+doneBtn.addEventListener('click', hotelClassHide);
+function hotelClassHide(){
+	hotelClassEditor.style.display = "none";
+}
+
+var AValue = document.getElementById('AValue');
+var AValueAdd = document.getElementById('AValueAdd');
+var AValueMinus = document.getElementById('AValueMinus');
+var CValue = document.getElementById('CValue');
+var CValueAdd = document.getElementById('CValueAdd');
+var CValueMinus = document.getElementById('CValueMinus');
+var IValue = document.getElementById('IValue');
+var IValueAdd = document.getElementById('IValueAdd');
+var IValueMinus = document.getElementById('IValueMinus');
+
+function myFunction(){
+
+  var date = new Date();
+  checkIn.valueAsDate = date
+  var d = new Date(checkIn.value),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+	    if (month.length < 2) 
+	        month = '0' + month;
+	    if (day.length < 2) 
+	        day = '0' + day;
+
+	    NewDate =  [year, month, day].join('-');
+  checkIn.setAttribute("min", NewDate);
+  var followingDay = new Date(date.getTime() + 1*(86400000)); 
+  checkOut.valueAsDate = followingDay
+  checkOut.setAttribute("min", NewDate);
+  document.getElementById('numNight').innerHTML= parseInt((new Date(checkOut.valueAsDate) - new Date(checkIn.valueAsDate))/86400000)
+  guestNo = 1;
+  roomNo = 1;
+  childNo = 0;
+  hotelClassValue = guestNo + childNo + " Guests, " + roomNo + " Rooms";
+  hotelClass.value = hotelClassValue;
+  AValue.innerHTML = roomNo;
+  CValue.innerHTML = guestNo;
+  IValue.innerHTML = childNo;
+
+}
+
+checkIn.addEventListener('change', checkDate);
+function checkDate(){
+	var date = new Date();
+	var d = new Date(),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+	    if (month.length < 2) 
+	        month = '0' + month;
+	    if (day.length < 2) 
+	        day = '0' + day;
+
+	    NewDate1 =  [year, month, day].join('-');
+
+	  if (checkIn.value != NewDate1) {
+	  	var followingDay = new Date((checkIn.valueAsDate).getTime() + 1*(86400000)); 
+	  	checkOut.valueAsDate = followingDay
+	  	var d = new Date((checkIn.valueAsDate).getTime() + 1*(86400000)),
+        month = '' + (d.getMonth() + 1),
+        day = ''  +  d.getDate(),
+        year = d.getFullYear();
+
+	    if (month.length < 2) 
+	        month = '0' + month;
+	    if (day.length < 2) 
+	        day = '0' + day;
+
+	    NewDate2 =  [year, month, day].join('-');
+	  checkOut.setAttribute("min", NewDate2);
+	  document.getElementById('numNight').innerHTML= parseInt((new Date(checkOut.valueAsDate) - new Date(checkIn.valueAsDate))/86400000)
+	  	
+
+	}
+	
+}
+
+checkOut.addEventListener('change', changeNight);
+function changeNight(){
+	document.getElementById('numNight').innerHTML= parseInt((new Date(checkOut.valueAsDate) - new Date(checkIn.valueAsDate))/86400000)
+}
+
+AValueAdd.addEventListener('click', AValueInc);
+function AValueInc(){
+	if (roomNo<3) {
+		roomNo = roomNo + 1;
+		guestNo = guestNo + 1;
+		hotelClassValue = guestNo + childNo + " Guests, " + roomNo + " Rooms";
+		hotelClass.value = hotelClassValue;
+		AValue.innerHTML = roomNo;
+		CValue.innerHTML = guestNo;
+	}
+}
+
+AValueMinus.addEventListener('click', AValueDec);
+function AValueDec(){
+	if (roomNo > 1) {
+		roomNo = roomNo - 1;
+		hotelClassValue = guestNo + childNo + " Guests, " + roomNo + " Rooms";
+		hotelClass.value = hotelClassValue;
+		AValue.innerHTML = roomNo;
+	}
+}
+
+CValueAdd.addEventListener('click', CValueInc);
+function CValueInc(){
+	if ((guestNo + childNo)<=16) {
+		if ((guestNo+childNo) < 7) {
+			guestNo = guestNo + 1;
+			CValue.innerHTML = guestNo;
+			hotelClassValue = guestNo + childNo + " Guests, " + roomNo + " Rooms";
+			hotelClass.value = hotelClassValue;
+		}else if((guestNo+childNo) == 7 && roomNo <= 2) {
+			guestNo = guestNo + 1;
+			roomNo = roomNo + 1;
+			hotelClassValue = guestNo + childNo + " Guests, " + roomNo + " Rooms";
+			hotelClass.value = hotelClassValue;
+			AValue.innerHTML = roomNo;
+			CValue.innerHTML = guestNo;
+		}else if ((guestNo+childNo) < 15) {
+			guestNo = guestNo + 1;
+			CValue.innerHTML = guestNo;
+			hotelClassValue = guestNo + childNo + " Guests, " + roomNo + " Rooms";
+			hotelClass.value = hotelClassValue;
+		}else if((guestNo+childNo) == 15 && roomNo < 3) {
+			guestNo = guestNo + 1;
+			roomNo = roomNo + 1;
+			hotelClassValue = guestNo + childNo + " Guests, " + roomNo + " Rooms";
+			hotelClass.value = hotelClassValue;
+			AValue.innerHTML = roomNo;
+			CValue.innerHTML = guestNo;
+		}
+	}
+	
+}
+
+CValueMinus.addEventListener('click', CValueDec);
+function CValueDec(){
+	if(((guestNo+childNo) == 7 && roomNo >= 2) || ((guestNo+childNo) == 15 && roomNo >= 3)) {
+		guestNo = guestNo - 1;
+		roomNo = roomNo - 1;
+		hotelClassValue = guestNo + childNo + " Guests, " + roomNo + " Rooms";
+		hotelClass.value = hotelClassValue;
+		AValue.innerHTML = roomNo;
+		CValue.innerHTML = guestNo;
+	} else if (((guestNo+childNo) > 1) || (guestNo+childNo) > 7 || (guestNo+childNo) > 15) {
+		guestNo = guestNo - 1;
+		CValue.innerHTML = guestNo;
+		hotelClassValue = guestNo + childNo + " Guests, " + roomNo + " Rooms";
+		hotelClass.value = hotelClassValue;
+	}
+
+	
+}
+
+IValueAdd.addEventListener('click', IValueInc);
+function IValueInc(){
+	if ((guestNo + childNo)<16) {
+		childNo = childNo + 1;
+		hotelClassValue = guestNo + childNo + " Guests, " + roomNo + " Rooms";
+		hotelClass.value = hotelClassValue;
+		IValue.innerHTML = childNo;
+	}
+	
+}
+
+IValueMinus.addEventListener('click', IValueDec);
+function IValueDec(){
+		if (childNo > 0) {
+			childNo = childNo - 1;
+			hotelClassValue = guestNo + childNo + " Guests, " + roomNo + " Rooms";
+			hotelClass.value = hotelClassValue;
+			IValue.innerHTML = childNo;
+		}
+		IValueMinus.style.outline = "none";
+	
+}
+
+var submit = document.getElementById('submit');
+submit.addEventListener('click',SubmitFunction);
+function SubmitFunction(){
+	if (FromInput.value.length == 0) {
+			FromInput.setAttribute("style", "border-bottom: 2px solid red;");
+			alert('please enter the Destination field')
+		}else{
+			FromInput.setAttribute("style", "border-bottom: 1px solid black;");
+			HotelSearchDetails = {
+				formInput : FromInput.value,
+				CheckInDate : checkIn.valueAsDate,
+				CheckOutDate : checkOut.valueAsDate,
+				AValue : document.getElementById('AValue').innerHTML,
+				CValue : document.getElementById('CValue').innerHTML,
+				IValue : document.getElementById('IValue').innerHTML,
+			}
+			localStorage.setItem('HotelSearchDetails', JSON.stringify(HotelSearchDetails));
+
+			window.location.href = '/hotelsearch/'+FromInput.value+'/';
+		}
+}
+
+{% for i in hotelCarousel1 %}
+
+function cityClick{{i.id}} (){
+	HotelSearchDetails = {
+				formInput : '{{i.cityname}}',
+				CheckInDate : checkIn.valueAsDate,
+				CheckOutDate : checkOut.valueAsDate,
+				AValue : document.getElementById('AValue').innerHTML,
+				CValue : document.getElementById('CValue').innerHTML,
+				IValue : document.getElementById('IValue').innerHTML,
+			}
+			localStorage.setItem('HotelSearchDetails', JSON.stringify(HotelSearchDetails));
+			window.location.href = '/hotelsearch/{{i.cityname}}/';
+
+}
+
+{% endfor %}
+
+{% for i in hotelCarousel2 %}
+
+function cityClick{{i.id}} (){
+	HotelSearchDetails = {
+				formInput : '{{i.cityname}}',
+				CheckInDate : checkIn.valueAsDate,
+				CheckOutDate : checkOut.valueAsDate,
+				AValue : document.getElementById('AValue').innerHTML,
+				CValue : document.getElementById('CValue').innerHTML,
+				IValue : document.getElementById('IValue').innerHTML,
+			}
+			localStorage.setItem('HotelSearchDetails', JSON.stringify(HotelSearchDetails));
+			window.location.href = '/hotelsearch/{{i.cityname}}/';
+
+}
+
+{% endfor %}
+
+{% for i in hotelCarousel3 %}
+
+function cityClick{{i.id}} (){
+	HotelSearchDetails = {
+				formInput : '{{i.cityname}}',
+				CheckInDate : checkIn.valueAsDate,
+				CheckOutDate : checkOut.valueAsDate,
+				AValue : document.getElementById('AValue').innerHTML,
+				CValue : document.getElementById('CValue').innerHTML,
+				IValue : document.getElementById('IValue').innerHTML,
+			}
+			localStorage.setItem('HotelSearchDetails', JSON.stringify(HotelSearchDetails));
+			window.location.href = '/hotelsearch/{{i.cityname}}/';
+
+}
+
+{% endfor %}
+
+</script>
+{% endblock %}

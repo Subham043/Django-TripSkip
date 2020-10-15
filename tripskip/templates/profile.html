@@ -1,0 +1,139 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% block css%}
+<link rel="stylesheet" type="text/css" href="{% static 'css/profile3.css'%}">
+{% endblock%}
+
+{%block onload%}
+onload="myFunction()"
+{%endblock%}
+
+{% block content %}
+<div class="container-fluid main-content">
+	{%if updated %}
+		<div class="alert alert-success alert-dismissible fade show" role="alert" style="width: 70%;margin-left: 15%;">
+		  <strong>Congartulaton!</strong> Your profile has been updated.
+		  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+		    <span aria-hidden="true">&times;</span>
+		  </button>
+		</div>
+	{% endif %}
+	<div class="tab">
+	  <button class="tablinks" onclick="openCity(event, 'Profile')" id="defaultOpen"><i class="fas fa-user-edit"></i> Profile Update</button>
+	  <button class="tablinks" onclick="openCity(event, 'Flight')"><i class="fas fa-plane"></i> Flights Booked</button>
+	  <button class="tablinks" onclick="openCity(event, 'Hotel')"><i class="fas fa-h-square"></i> Hotels Booked</button>
+	  <button class="tablinks" onclick="openCity(event, 'Contact')"><i class="fas fa-file-signature"></i> Complaints Made</button>
+	</div>
+
+	<div id="Profile" class="tabcontent">
+		{% load crispy_forms_tags %}
+	   <form method="POST" class="form-group" style="margin-top: 10px;">
+		  	{% csrf_token %}
+		  	{{ userform|crispy }}
+		  	{{ userprofileForm|crispy }}
+		  	<button type="submit" class="btn btn-primary">Update</button>
+		  </form>
+	</div>
+
+	<div id="Flight" class="tabcontent" style="overflow-y: scroll;padding: 20px;">
+		
+		{% for i in flight reversed %}
+		
+	  
+		<div class="alert alert-info" role="alert">
+		  Flight-Date: {{i.FlightDate}}<br><br>
+		  Departure: {{i.DeparturePlace}} [{{i.DepartureTime}}]<br><br>
+		  Arrival: {{i.ArrivalPlace}} [{{i.ArrivalTime}}]<br><br>
+		  <a type="button" class="btn btn-light" href="/viewflightticket/{{i.FlightNum}}/{{i.DeparturePlace}}/{{i.ArrivalPlace}}/{{i.payment_id}}/" target="_blank">View Ticket</a>
+		</div>
+
+		{% empty %}
+    	 
+    	 <p>No Flights booked yet!!</p>
+
+		{% endfor %}
+
+	</div>
+
+	<div id="Hotel" class="tabcontent" style="overflow-y: scroll;padding: 20px;">
+	  
+		{% for i in hotel reversed %}
+		
+	  
+		<div class="alert alert-info" role="alert">
+		  Hotel: {{i.HotelName}}<br><br>
+		  Check-In: {{i.checkIn}},2020<br><br>
+		  Check-Out: {{i.checkOut}},2020<br><br>
+		  <a type="button" class="btn btn-light" href="/viewhotelticket/{{i.payment_id}}/" target="_blank">View Booking</a>
+		</div>
+
+		{% empty %}
+    	 
+    	 <p>No Hotels booked yet!!</p>
+
+		{% endfor %}
+
+	</div>
+
+	<div id="Contact" class="tabcontent">
+	  	{% if complaint == 'empty' %}
+	  		<p>No complaints made yet!!</p>
+	  	{% else %}
+	  		{%for i in complaint reversed %}
+			<!-- Button trigger modal -->
+			<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#exampleModal{{i.id}}" style="margin-top: 20px;">
+			  {{forloop.counter}}. Mail from {{i.username}}
+			</button><br><br>
+			{%endfor%}
+	  	{% endif %}
+	  	
+		{%for i in complaint%}
+		<!-- Modal -->
+		<div class="modal fade" id="exampleModal{{i.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header" style="background-color: #5f74f9;">
+		        <h5 class="modal-title" id="exampleModalLabel" style="color: #fff">{{i.username}}</h5>
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		          <span aria-hidden="true">&times;</span>
+		        </button>
+		      </div>
+		      <div class="modal-body">
+		        <p>Name:</p><h4 style="color: #5f74f9;">{{i.name}}</h4>
+		        <p>Email:</p><h4 style="color: #5f74f9;">{{i.email}}</h4>
+		        <p>Contact:</p><h4 style="color: #5f74f9;">{{i.phone}}</h4>
+		        <p>Message:</p><h4 style="color: #5f74f9;">{{i.message}}</h4>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+		{%endfor%}
+
+	</div>
+
+</div>
+{% endblock %}
+
+{% block js %}
+
+<script type="text/javascript">
+	function openCity(evt, cityName) {
+	  var i, tabcontent, tablinks;
+	  tabcontent = document.getElementsByClassName("tabcontent");
+	  for (i = 0; i < tabcontent.length; i++) {
+	    tabcontent[i].style.display = "none";
+	  }
+	  tablinks = document.getElementsByClassName("tablinks");
+	  for (i = 0; i < tablinks.length; i++) {
+	    tablinks[i].className = tablinks[i].className.replace(" active", "");
+	  }
+	  document.getElementById(cityName).style.display = "block";
+	  evt.currentTarget.className += " active";
+	}
+
+	// Get the element with id="defaultOpen" and click on it
+	document.getElementById("defaultOpen").click();
+</script>
+
+{% endblock%}

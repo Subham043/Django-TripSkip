@@ -1,0 +1,438 @@
+body{
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	background-color: #dfdedd;
+}
+nav{
+	width: 100%;
+	min-height: 85px;
+	background-color: #f6fafa;
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 999;
+}
+.logo{
+	width: 30%;
+	min-height: 60px;
+	float: left;
+	margin-top: 10px;
+}
+.logo img{
+	float: left;
+	width: 20%;
+	height: 55px;
+}
+.logo span{
+	float: left;
+	font-size: 25px;
+	margin-top: 10px;
+	margin-left: -10px;
+	color: #5f74f9;
+	font-weight: bold;
+}
+.menu{
+	width: 50%;
+	min-height: 60px;
+	float: right;
+	margin-top: 15px;
+}
+.menu ul{
+	float: right;
+	margin-top: 10px;
+}
+.menu .Nav-li{
+	display: inline-block;
+}
+.menu .Nav-li-a{
+	font-size: 20px;
+	margin-right: 35px;
+	color: #5ea2f9;
+	text-decoration: none;
+	transition: all 0.2s;
+}
+.menu .Nav-li-user{
+	font-size: 20px;
+	margin-right: 35px;
+	color: #5ea2f9;
+	text-decoration: none;
+	transition: all 0.2s;
+}
+.menu .Nav-li-a.active{
+	color: #5f74f9;
+	border-bottom: 2px solid #5f74f9;
+	padding-bottom: 15px;
+}
+.menu .Nav-li-a:hover{
+	color: #5f74f9;
+	border-bottom: 2px solid #5f74f9;
+	padding-bottom: 15px;
+}
+
+/*nav ends */
+
+.main-content{
+	min-height: 1200px;
+	margin-top: 85px;
+	margin-bottom: 3%;
+}
+.main-content h3{
+	font-weight: bolder;
+	color: #5f74f9;
+	padding-bottom: 8px;
+	padding-top: 30px;
+}
+
+.flightdetail-content{
+	float: left;
+	width: 65%;
+	min-height: 400px;
+	margin-left: 1%;
+	margin-right: 3%;
+}
+.flightdetail{
+	width: 100%;
+	min-height: 330px;
+	padding-top: 10px;
+	background-color: #f6f6f6;
+	border-radius: 15px;
+}
+.flightdetail1{
+	padding: 10px;
+	padding-top:25px; 
+}
+.flightcontent{
+	width: 20%;
+	float: left;
+	margin-left: 7%;
+}
+.flightcontent2{
+	height: 100px;
+}
+.flightcontent1{
+	margin-left: -30px;
+	margin-right: -15px;
+}
+.flightcontent img{
+	width: 100%;
+	height: 100%;
+}
+.time{
+	font-size: 35px;
+	font-weight: bold;
+	margin-top: -12%;
+}
+.date{
+	margin-top: -12%;
+}
+.amenities1{
+	font-size: 12px;
+	border-bottom: 1px solid black;
+	padding-bottom: 10%;
+	margin-top: 8%;
+}
+.amenities2{
+	font-size: 12px;
+}
+.fcontent{
+	width: 100%;
+	min-height: 100px;
+	margin: auto;
+}
+.fdetail{
+	width: 85%;
+	min-height: 175px;
+	margin: auto;
+	background-color: #f9e8a2;
+	margin-top: 20px;
+	padding: 10px;
+	font-size: 15px;
+}
+.labelinput{
+	font-size: 20px;
+	margin-top: 15px;
+	margin-left: 10px;
+	margin-right: 20px;
+	color: #5f74f9;
+}
+.labelinputA,.labelinputC{
+	font-size: 20px;
+	margin-top: 15px;
+	margin-left: 10px;
+	margin-right: 20px;
+	color: #5f74f9;
+}
+.labelinputI{
+	font-size: 20px;
+	margin-top: 15px;
+	margin-left: 10px;
+	margin-right: 14px;
+	color: #5f74f9;
+}
+#email,#phone,#fname,#lname{
+	height: 40px;
+	width: 300px;
+	margin-right: 35px;
+	padding-left: 10px;
+}
+#fname{
+	margin-left: 7%;
+}
+.fnameAdult, .fnameChild, .fnameInfant{
+	height: 40px;
+	width: 300px;
+	margin-right: 35px;
+	padding-left: 10px;
+	margin-left: 7%;
+}
+.lnameAdult, .lnameChild, .lnameInfant{
+	height: 40px;
+	width: 300px;
+	margin-right: 35px;
+	padding-left: 10px;
+}
+.note{
+	margin-left: 18%;
+	margin-top: 5px;
+}
+.outbold{
+	font-size: 20px;
+	font-weight: bolder;
+}
+
+#submit{
+	margin-top: 45px;
+	margin-left: 35%;
+	 width: 30%;
+	 padding:10px;
+	 border:1px solid #5f74f9;
+	 color: #5f74f9;
+	 box-shadow: -2px 8px 22px 0 #7e8a97;
+     transition: all 0.3s;
+}
+#submit:hover{
+		  width: 45%;
+		  margin-left: 30%;
+		  font-size: 20px;
+		  color: white;
+		  background-color: #5f74f9;
+		  box-shadow: -2px 8px 22px 0 #5f74f9;
+		  cursor: pointer;
+		}
+
+#flightprice-content{
+	float: left;
+	width: 30%;
+	min-height: 400px;
+	position: sticky;
+
+}
+.flightprice-content h3{
+	font-weight: bolder;
+	color: #5f74f9;
+	padding-bottom: 8px;
+	padding-top: 30px;
+}
+.faredetails{
+	width: 100%;
+	background-color: #fff;
+	min-height: 175px;
+	border-radius: 15px;
+	padding: 20px;
+}
+.left{
+	width: 60%;
+	font-size: 15px;
+	height: 40px;
+}
+.right{
+	width: 16%;
+	height: 40px;
+	text-align: right;
+}
+.lefth{
+	width: 16%;
+	height: 50px;
+	font-size: 20px;
+	font-weight: bold;
+	border-top:3px solid grey;
+}
+.righth{
+	width: 23%;
+	height: 50px;
+	text-align: right;
+	font-size: 20px;
+	font-weight: bold;
+	border-top:3px solid grey;
+}
+
+#offer{
+	width: 60%;
+	height: 40px;
+	padding-left: 10px;
+	margin-bottom: 5px;
+}
+#apply{
+	width: 25%;
+	height: 40px;
+	background-color: #fff;
+	color: #5f74f9;
+	border:1px solid #5f74f9;
+	margin-left: 5px;
+	transition: all 1s;
+}
+#apply:hover{
+	border:none;
+	color: #fff;
+	background-color: #5f74f9;
+}
+input[type="radio"] {
+  /* remove standard background appearance */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  /* create custom radiobutton appearance */
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  /* background-color only for content */
+  background-clip: content-box;
+  border: 2px solid #5f74f9;
+  background-color: #e7e6e7;
+  border-radius: 50%;
+}
+
+/* appearance for checked radiobutton */
+input[type="radio"]:checked {
+  background-color: #5f74f9;
+}
+.labelradio{
+	color: #5f74f9;
+	font-weight: bold;
+	margin-left: 10px;
+	font-size: 20px;
+}
+.radionote{
+	margin-left: 7%;
+	color: grey;
+	margin-top: -3%;
+}
+
+#promo-Div-Applied{
+	margin-top: 10px;
+	display: none;
+}
+#Promo-Text{
+	color: green;
+}
+#cancelPromo-Text{
+	color: red;
+}
+#cancelPromo{
+	display: inline;
+	margin-left: 10px;
+	width: 35px;
+	height: 35px;
+	border-radius: 35px;
+	border:2px solid red;
+	background-color: #fff;
+	color: red;
+	transition: all 0.3s;
+}
+#cancelPromo:hover{
+	color: #fff;
+	background-color: red;
+}
+
+
+
+
+
+
+
+footer{
+	width: 100%;
+	min-height: 120px;
+	background-color: #f6fafa;
+	margin-top: 5%;
+}
+.logo-footer{
+	width: 30%;
+	min-height: 60px;
+	float: left;
+	margin-top: 20px;
+	margin-left: 100px;
+}
+.logo-footer img{
+	float: left;
+	width: 20%;
+	height: 55px;
+	margin-left: 25px;
+}
+.logo-footer span{
+	float: left;
+	font-size: 25px;
+	margin-top: 10px;
+	margin-left: -10px;
+	color: #5f74f9;
+	font-weight: bold;
+}
+.copy-footer{
+	width: 30%;
+	min-height: 60px;
+	float: left;
+	margin-top: 30px;
+	font-size: 24px;
+}
+.social-footer{
+	width: 30%;
+	min-height: 60px;
+	float: left;
+	margin-top: 10px;
+	text-align: center;
+}
+.social-footer h6{
+	font-size: 20px;
+	font-weight: bold;
+	color: grey;
+}
+.fa-facebook,.fa-twitter,.fa-youtube,.fa-linkedin,.fa-instagram{
+	border:1px solid grey;
+	font-size: 40px;
+	font-weight: bold;
+	color: grey;
+	transition: all 1s;
+	padding: 10px;
+	border-radius: 30px;
+}
+.fa-facebook:hover{
+	color: #fff;
+	border:1px solid #4267B2;
+	background-color: #4267B2;
+	transform: rotate(360deg);
+}
+.fa-twitter:hover{
+	color: #fff;
+	border:1px solid #00acee;
+	background-color: #00acee;
+	transform: rotate(360deg);
+}
+.fa-youtube:hover{
+	color: #fff;
+	border:1px solid #FF0000;
+	background-color: #FF0000;
+	transform: rotate(360deg);
+}
+.fa-linkedin:hover{
+	color: #fff;
+	border:1px solid #0e76a8;
+	background-color: #0e76a8;
+	transform: rotate(360deg);
+}
+.fa-instagram:hover{
+	color: #fff;
+	border:1px solid #c13584;
+	background-color: #c13584;
+	transform: rotate(360deg);
+}

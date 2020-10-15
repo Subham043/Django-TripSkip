@@ -1,0 +1,128 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% block css%}
+<link rel="stylesheet" type="text/css" href="{% static 'css/success1.css'%}">
+{% endblock%}
+
+
+
+{% block content %}
+<div class="container" style="margin-top: 85px;">
+	<div class="alert alert-success alert-dismissible fade show" role="alert">
+	  <strong>Congratulation!</strong> Your Hotel room is booked.
+	  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+	    <span aria-hidden="true">&times;</span>
+	  </button>
+	</div>
+	
+	<div class="container main-content">
+		<div class="headerpic">
+		<div class="ticketLogo">
+			<img src="{% static 'images/globe.svg'%}"><span>TripSkip</span>
+		</div>
+		<div class="ticketId">
+			<p>Booking ID</p>
+			<h5>{{userPaidDet.payment_id}}</h5>
+		</div>
+		<div class="tickethelp">
+			<p>24x7 Flights Helpline</p>
+			<h5>0120 4880880</h5>
+		</div>
+		</div>
+		<div class="textbody">
+			<h4>Hi {{request.user.first_name}} {{request.user.last_name}},</h4>
+			<p>Your hotel booking is confirmed. Here are the details. Please find your booking details attached with the email.</p>
+		</div>
+		<div class="ticketbody" id="ticketbody">
+			<div class="ticketbody-top">
+				<p class="pleft">Booked</p>
+				<p class="pright">CODE XSRCVZ</p>
+			</div>
+			<div class="ticketbody-middle" style="min-height: 300px;">
+				<div class="flightImage">
+					
+					<p>Hotel: {{userPaidDet.HotelName}}</p>
+				</div>
+				<div class="flightdep">
+					<h4>{{userPaidDet.checkIn}},2020</h4>
+					<h4>Check-In</h4>
+					<br><br>
+					<h4>Rooms: {{userPaidDet.tRoom}}</h4>
+				</div>
+				<div class="duration">
+					<h5 id="dur"></h5>
+					<h5><i class="far fa-clock"></i></h5>
+				</div>
+				<div class="flightarr">
+					<h4>{{userPaidDet.checkOut}},2020</h4>
+					<h4>Check-Out</h4>
+					<br><br>
+					<h4>Adults: {{userPaidDet.tAdults}}</h4>
+					<h4>Child: {{userPaidDet.tChild}}</h4>
+				</div>
+			</div>
+			<div class="ticketbody-low" style="min-height: 180px;">
+				<div class="trav">
+					<h4>Guest</h4>
+					<h5 id="namesT">{{userPaidDet.FirstName}} {{userPaidDet.LastName}}</h5>
+					<h5 id="namesT">{{userPaidDet.phone}}</h5>
+					<h5 id="namesT">{{userPaidDet.email}}</h5>
+				</div>
+				<div class="ticketno">
+					<h4>Booking No.</h4>
+					<h5>XSRCVZ</h5>
+				</div>
+			</div>
+		</div>
+		<div class="textbody2">
+			<p>Important</p>
+			<ul>
+				<li>Please carry your Govt. ID proof for all guests to show during security check. ID proof should be same as on your booking.</li>
+				
+			</ul>
+		</div>
+	</div>
+
+</div>
+<button id="preview" style="margin-left: 45%;">Download</button>
+
+{%endblock%}
+
+{% block js %}
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.js"></script>
+<script>
+	window.onload = function () {
+		document.getElementById('preview')
+		.addEventListener('click', () =>{
+			const invoice = this.document.getElementById('ticketbody');
+			console.log(invoice)
+			console.log(window)
+			var opt = {
+				margin: 0,
+				filename: 'myfile.pdf',
+				image: {type: 'jpeg', quality: 0.98},
+				html2canvas: {scale: 2},
+				jsPDF: {unit: 'in', format: 'letter', orientatation: 'potrait'}
+			};
+			html2pdf().from(invoice).set(opt).save();
+		})
+	}
+
+
+
+
+</script>
+<script type="text/javascript">
+	Ind = '{{userPaidDet.checkIn}}'
+	cIn = Ind[0]+Ind[1];
+	Outd = '{{userPaidDet.checkOut}}'
+	cOut = Outd[0]+Outd[1];
+	nights = parseInt(cOut) - parseInt(cIn)
+	document.getElementById('dur').innerHTML = nights + ' Nights';
+	console.log(document.getElementById('dur').innerHtml)
+</script>
+
+{% endblock %}
+

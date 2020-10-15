@@ -1,0 +1,331 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% block css%}
+<link rel="stylesheet" type="text/css" href="{% static 'css/flightbook3.css'%}">
+{% endblock%}
+
+{%block onload%}
+onload="myFunction()" onscroll="myScrollFunction()"
+{%endblock%}
+
+{% block content %}
+
+{% if payment %}
+	<div class="container-fluid" style="margin-top: 85px;height: 480px;">
+		<div class="alert alert-primary" role="alert">
+			Please Make the Payment To Successfully Book the Ticket: &nbsp;
+		<form action="/flightbooked/{{flight.flightnum}}/{{departure.place}}/{{arrival.place}}/" method="POST" id="PayForm">
+		<script
+		    src="https://checkout.razorpay.com/v1/checkout.js"
+		    data-key="rzp_test_NeysSsZI9pQXph" // Enter the Key ID generated from the Dashboard
+		    data-amount="{{payment.amount}}" // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+		    data-currency="INR"
+		    data-order_id="{{payment.id}}"//This is a sample Order ID. Pass the `id` obtained in the response of the previous step.
+		    data-buttontext="Pay with Razorpay"
+		    data-name="Tripskip Corp"
+		    data-description="Test transaction"
+		    data-image="https://example.com/your_logo.jpg"
+		    data-prefill.name="Gaurav Kumar"
+		    data-prefill.email="gaurav.kumar@example.com"
+		    data-prefill.contact="9999999999"
+		    data-theme.color="#F37254"
+		></script>
+		<input type="hidden" custom="Hidden Element" name="hidden">
+		</form>
+		</div>
+		</div>
+		{%else%}
+
+	<div class="container-fluid main-content">
+		
+
+	<div class="flightdetail-content">
+		<h3><i class="fas fa-plane"></i> Flight Details</h3>
+		<div class="flightdetail">
+			<div class="fcontent">
+				<div class="flightcontent flightcontent2">
+					<img src="{{flight.image.url}}">
+				</div>
+				<div class="flightcontent">
+					<p class="dest">{{departure.place}}, IN</p>
+					<p class="time">{{flight.depttime}}</p>
+					<p class="date" id="depDateValue"></p>
+				</div>
+				<div class="flightcontent flightcontent1">
+					<p class="amenities1"><i class="far fa-clock"></i> {{flight.duration}} | <i class="fas fa-utensils"></i> Paid Meal | Economy</p>
+					<p class="amenities2">15Kgs | Partially Refundable</p>
+				</div>
+				<div class="flightcontent">
+					<p class="dest">{{arrival.place}}, IN</p>
+					<p class="time">{{flight.arrtime}}</p>
+					<p class="date" id="arrDateValue"></p>
+				</div>
+			</div>
+			<div class="fdetail">
+				<p><i class="fas fa-info-circle"></i>  Compulsory Guidelines for Passengers</p>
+				<ul>
+					<li>You need to certify your health status through Aarogya Setu app preactivated on your mobile or self-declaration form</li>
+					<li>Face Mask is mandatory both at the airport & in flight</li>
+					<li>Only passengers with confirmed web check-in will be allowed to enter 2 hours prior to the flight departure</li>
+					<li>Only one check-in bag and cabin bag will be allowed per customer with a baggage tag affixed on the bag</li>
+				</ul>
+			</div>
+		
+		</div>
+		<h3><i class="fas fa-user-plus"></i> Traveller Details</h3>
+		<div class="flightdetail flightdetail1">
+			<form method="POST" onsubmit="return checkValidation()">{% csrf_token %}
+			<label class="labelinput">Contact Details:</label><input type="email" name="email" id="email" placeholder="Email ID" required="true"><input type="tel" name="phone" id="phone" placeholder="Mobile Number" required="true">
+			<p class="note">Your booking details will be sent to this email address and mobile number.</p>
+
+			<p class="note outbold">Traveller Information</p>
+			<p class="note"><span style="background-color: #f9e8a2">Important Note:</span> Please ensure that the names of the passengers on the travel documents is the same as on their government issued identity proof.</p>
+			<div id="info-traveller"></div>
+		</div>
+		<form method="POST" onsubmit="checkValidation()">{% csrf_token %}
+		<input type="hidden" name="customerUsername" id="customerUsername" value="{{request.user.username}}">
+		<input type="hidden" name="totalAmt" id="totalAmt">
+		<input type="hidden" name="AdultName" id="AdultName">
+		<input type="hidden" name="ChildName" id="ChildName">
+		<input type="hidden" name="InfantName" id="InfantName">
+		<input type="hidden" name="DeparturePlace" id="DeparturePlace" value="{{departure.place}}">
+		<input type="hidden" name="ArrivalPlace" id="ArrivalPlace" value="{{arrival.place}}">
+		<input type="hidden" name="DepartureTime" id="DepartureTime" value="{{flight.depttime}}">
+		<input type="hidden" name="ArrivalTime" id="ArrivalTime" value="{{flight.arrtime}}">
+		<input type="hidden" name="FlightDate" id="FlightDate">
+		<input type="hidden" name="FlightNum" id="FlightNum" value="{{num}}">
+		<input type="hidden" name="Email" id="Email" >
+		<input type="hidden" name="Phone" id="Phone" >
+		<input type="submit" name="submit" id="submit" value="Proceed To Payment">
+		</form>
+		
+	</div>
+
+	<div class="flightprice-content" id="flightprice-content">
+		<h3><i class="fas fa-money-check-alt"></i> Fare Details</h3>
+		<div class="faredetails">
+			<table>
+				<tr id="AdultRow">
+					<td class="left">Adult</td>
+					<td class="right" id="AdultNum">1</td>
+				</tr>
+				<tr id="ChildRow" style="display: none;">
+					<td class="left">Children</td>
+					<td class="right" id="ChildNum">1</td>
+				</tr>
+				<tr id="InfantRow" style="display: none;">
+					<td class="left">Infant</td>
+					<td class="right" id="InfantNum">1</td>
+				</tr>
+				<tr>
+					<td class="left">Base Fare (1 Traveller)</td>
+					<td class="right" id="flghtPrice">{{flight.price}}</td>
+				</tr>
+				<tr>
+					<td class="left">Fee & Surcharges</td>
+					<td class="right" id="tax">Rs. 571</td>
+				</tr>
+				<tr id="Promo-Column">
+					<td class="left" id="Promo-Row"></td>
+					<td class="right" id="totalDiscount"></td>
+				</tr>
+				<tr>
+					<td class="lefth">Total Fare</td>
+					<td class="righth" id="TotalPrice">Rs. 5006</td>
+				</tr>
+			</table>
+		</div>
+
+		<h3><i class="fas fa-comment-dollar"></i> Promo Code</h3>
+		<div class="faredetails">
+			<p>Select a Promo Code</p>
+			<input type="text" name="offer" id="offer" placeholder="Your Promo Code"><button type="submit" name="apply" id="apply">Apply</button>
+			<div id="promo-Div">
+			<br><input type="radio" name="offercode" id="offercode1" onclick="PromoFunction(message='PREMIUMFLY',discount='10')" value="PREMIUMFLY" > <label class="labelradio">PREMIUMFLY</label>
+			<p class="radionote">Flat 10% off on domestic flights using paytm upi</p>
+			<br><input type="radio" name="offercode" id="offercode2" onclick="PromoFunction(message='FLYAXIS',discount='25')" value="FLYAXIS" > <label class="labelradio">FLYAXIS</label>
+			<p class="radionote">Flat 25% off on flights using axis credit card</p>
+			<br><input type="radio" name="offercode" id="offercode3" onclick="PromoFunction(message='ICICILOUNGE',discount='0')" value="ICICILOUNGE" > <label class="labelradio">ICICILOUNGE</label>
+			<p class="radionote">Get free airport lounge access using icici debit cards</p>
+			</div>
+			<div id="promo-Div-Applied">
+				<p id="Promo-Text"></p>
+				<p id="cancelPromo-Text">Clear Promocode <button id="cancelPromo" onclick="cancelPromoFunction()"><i class="fas fa-times"></i></button></p>
+			</div>
+		</div>
+
+	</div>
+
+
+
+</div>
+<!--flightdetail end -->
+{% endif %}
+
+{% endblock %}
+
+{% block js %}
+
+
+<script type="text/javascript">
+
+	var retrievedObject = localStorage.getItem('flightSearchDetails');
+	var flightSearchDetails = JSON.parse(retrievedObject);
+
+	function myScrollFunction() {
+	for(i=0;i<10;i++){
+		document.getElementById('flightprice-content').style.top = Math.max(i) + 'px';
+	}
+	
+}
+
+
+function myFunction() {
+	
+	infoTravellerStr = ''
+	if (flightSearchDetails.AValue == null) {flightSearchDetails.AValue = 1}
+	for(i = 1; i<= flightSearchDetails.AValue;i++){
+		var infoTravellerStr = infoTravellerStr +'<label class="labelinputA">Adult '+i+':</label><input type="text" name="fname" class="fnameAdult" id="fnameAdult'+i+'" placeholder="First Name" required="true"><input type="text" name="lname" class="lnameAdult" id="lnameAdult'+i+'" placeholder="Last Name" required="true"><br>';
+	}
+	for(i = 1; i<= flightSearchDetails.CValue;i++){
+		var infoTravellerStr = infoTravellerStr +'<label class="labelinputC">Child '+i+':</label><input type="text" name="fname" class="fnameChild" id="fnameChild'+i+'" placeholder="First Name" required="true"><input type="text" name="lname" class="lnameChild" id="lnameChild'+i+'" placeholder="Last Name" required="true"><br>';
+	}
+	for(i = 1; i<= flightSearchDetails.IValue;i++){
+		var infoTravellerStr = infoTravellerStr +'<label class="labelinputI">Infant '+i+':</label><input type="text" name="fname" class="fnameInfant" id="fnameInfant'+i+'" placeholder="First Name" required="true"><input type="text" name="lname" class="lnameInfant" id="lnameInfant'+i+'" placeholder="Last Name" required="true"><br>';
+	}
+	document.getElementById('info-traveller').innerHTML = infoTravellerStr;
+
+	document.getElementById('AdultNum').innerHTML = flightSearchDetails.AValue;
+
+	document.getElementById('Promo-Column').style.display = 'none'
+
+	if (flightSearchDetails.CValue > 0) {
+		document.getElementById('ChildRow').setAttribute("style", "display: table-row;")
+		document.getElementById('ChildNum').innerHTML = flightSearchDetails.CValue;
+	}
+
+	if (flightSearchDetails.IValue > 0) {
+		document.getElementById('InfantRow').setAttribute("style", "display: table-row;")
+		document.getElementById('InfantNum').innerHTML = flightSearchDetails.IValue;
+	}
+
+	var flghtPrice = document.getElementById('flghtPrice');
+			  	var str = flghtPrice.innerHTML; 
+			  	newStr = ''
+	            var matches = str.match(/(\d+)/); 
+	             for(m in str){
+		             	if (str[m].match(/(\d+)/)) { 
+		            	newStr = newStr + str[m];
+		            } 
+	             }
+	            newPrice1 = newStr * flightSearchDetails.travelInput;
+	                document.getElementById('flghtPrice').innerHTML 
+	                        = 'Rs.'+newPrice1;
+
+	var tax = document.getElementById('tax');
+			  	var str = tax.innerHTML; 
+			  	newStr = ''
+	            var matches = str.match(/(\d+)/); 
+	             for(m in str){
+		             	if (str[m].match(/(\d+)/)) { 
+		            	newStr = newStr + str[m];
+		            } 
+	             }
+	            newPrice2 = newStr * flightSearchDetails.travelInput;
+	                document.getElementById('tax').innerHTML 
+	                        = 'Rs.'+newPrice2; 
+
+	 document.getElementById('TotalPrice').innerHTML = 'Rs. ' + ((newPrice1 - 0)+newPrice2);
+	 var depDate = new Date(flightSearchDetails.DeparturDate);
+	 document.getElementById('totalAmt').value = parseInt(((newPrice1 - 0)+newPrice2));
+	 weekDay = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+	 monthName = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
+	 document.getElementById('depDateValue').innerHTML = weekDay[depDate.getDay()] +', '+depDate.getDate()+' '+monthName[depDate.getMonth()]+' '+depDate.getFullYear();
+	 document.getElementById('arrDateValue').innerHTML = weekDay[depDate.getDay()] +', '+depDate.getDate()+' '+monthName[depDate.getMonth()]+' '+depDate.getFullYear()
+
+
+
+
+
+
+}
+
+var offercode1 = document.getElementById('offercode1');
+function PromoFunction(message,discount){
+	document.getElementById('promo-Div').style.display = 'none'
+	document.getElementById('offer').value = this.message;
+	document.getElementById('offer').style.color = '#5f74f9'
+	document.getElementById('offer').setAttribute('disabled','true')
+	document.getElementById('apply').innerHTML = 'Applied <i class="fas fa-check-circle"></i>'
+	document.getElementById('apply').setAttribute('disabled','true');
+	document.getElementById('promo-Div-Applied').style.display = 'block'
+	if (this.message == 'ICICILOUNGE') {
+		document.getElementById('Promo-Text').innerHTML = 'Yay! '+this.message +' applied successfully! Your Airport Lounge Access Voucher will be sent to you by SMS within 24 hours of the successful transaction.';
+	}else {
+		document.getElementById('Promo-Text').innerHTML = this.message + ' applied! Total Fare is updated.';
+	}
+	document.getElementById('Promo-Row').innerHTML = this.message + ' Applied';
+	document.getElementById('Promo-Row').style.color = 'green'
+	discountPrice = parseInt(this.discount);
+	discountedPrice = (newPrice1 * (discountPrice/100)).toFixed(2);
+	document.getElementById('totalDiscount').innerHTML = 'Rs. '+ discountedPrice;
+	document.getElementById('totalDiscount').style.color = 'green'
+	document.getElementById('TotalPrice').innerHTML = 'Rs. ' + ((newPrice1 - discountedPrice)+newPrice2);
+	document.getElementById('totalAmt').value =  parseInt(((newPrice1 - discountedPrice)+newPrice2));
+	 console.log(document.getElementById('totalAmt').value);
+	document.getElementById('Promo-Column').style.display = 'table-row';
+}
+
+
+ function cancelPromoFunction(){
+ 	document.getElementById('promo-Div').style.display = 'block'
+	document.getElementById('offer').value = '';
+	document.getElementById('offer').style.color = '#000'
+	document.getElementById('offer').setAttribute('disabled','false')
+	document.getElementById('apply').innerHTML = 'Apply'
+	document.getElementById('apply').setAttribute('disabled','false');
+	document.getElementById('promo-Div-Applied').style.display = 'none'
+	document.getElementById('Promo-Text').innerHTML = '';
+	document.getElementById('Promo-Row').innerHTML = '';
+	document.getElementById('Promo-Row').style.color = 'green'
+	discountPrice = parseInt(this.discount);
+	discountedPrice = (newPrice1 * (discountPrice/100)).toFixed(2);
+	document.getElementById('totalDiscount').innerHTML = 'Rs. '+ discountedPrice;
+	document.getElementById('totalDiscount').style.color = 'green'
+	newFare = ((parseInt(newPrice1) - parseInt(discountedPrice))+parseInt(newPrice2)) + parseInt(discountedPrice);
+	document.getElementById('TotalPrice').innerHTML = 'Rs. ' + newFare;
+	document.getElementById('totalAmt').value =  parseInt(newFare);
+	 console.log(document.getElementById('totalAmt').value); 
+	document.getElementById('Promo-Column').style.display = 'none';
+ }
+
+function checkValidation(){
+
+	AdultNameStr = ''
+	if (flightSearchDetails.AValue == null) {flightSearchDetails.AValue = 1}
+	for(i = 1; i<= flightSearchDetails.AValue;i++){
+		AdultNameStr = AdultNameStr + document.getElementById('fnameAdult'+i).value + ' ' + document.getElementById('lnameAdult'+i).value  + ','
+	}
+	document.getElementById('AdultName').value = AdultNameStr
+	console.log(document.getElementById('AdultName').value)
+	ChildNameStr = ''
+	for(i = 1; i<= flightSearchDetails.CValue;i++){
+		ChildNameStr = ChildNameStr + document.getElementById('fnameChild'+i).value + ' ' + document.getElementById('lnameChild'+i).value  + ','
+	}
+	document.getElementById('ChildName').value = ChildNameStr
+	console.log(document.getElementById('ChildName').value)
+	InfantNameStr = ''
+	for(i = 1; i<= flightSearchDetails.IValue;i++){
+		InfantNameStr = InfantNameStr + document.getElementById('fnameInfant'+i).value + ' ' + document.getElementById('lnameInfant'+i).value  + ','
+	}
+	document.getElementById('InfantName').value = InfantNameStr
+	console.log(document.getElementById('InfantName').value)
+	document.getElementById('FlightDate').value = document.getElementById('depDateValue').innerHTML;
+	document.getElementById('Email').value = document.getElementById('email').value;
+	document.getElementById('Phone').value = document.getElementById('phone').value;
+}
+
+</script>
+{% endblock %}
+

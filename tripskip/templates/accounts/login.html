@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% block css%}
+<link rel="stylesheet" type="text/css" href="{% static 'css/user1.css'%}">
+{% endblock%}
+
+{%block onload%}
+{% load crispy_forms_tags %}
+
+{%endblock%}
+
+{% block content %}
+<div class="container" style="margin-top: 90px;">
+	<h2 style="color: #5f74f9;padding-bottom: 50px;text-align: center;
+	padding-top: 20px;">Login</h2>
+	<div class="container log">
+		<form method="POST" class="form-group">
+		    {% csrf_token %}
+		    {{ form|crispy }}
+		    {% if request.GET.next %}
+		    	<input type="hidden" name="next" value="{{request.GET.next}}">
+		    {% endif %}
+		    <p>Don't have an account? <a href="/signup/">Create here</a></p>
+		    <button type="submit" class="btn btn-success">Login</button>
+		  </form>
+	</div>
+</div>
+
+{% endblock %}

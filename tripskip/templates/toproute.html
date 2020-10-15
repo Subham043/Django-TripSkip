@@ -1,0 +1,440 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% block css%}
+<link rel="stylesheet" type="text/css" href="{% static 'css/flightsearch2.css'%}">
+{% endblock%}
+
+{%block onload%}
+onload="myFunction()"
+{%endblock%}
+
+{% block content %}
+
+<div class="container-fluid search-box">
+	<div class="radio-section">
+		<input type="radio" name="trip" id="oneway" checked><label class="radio-label">One Way</label>
+		 <input type="radio" name="trip" id="roundtrip"><label class="radio-label">Round Trip</label>
+	</div>
+	<div class="search-section">
+		<div class="search-element first-element">
+			<label id="fromlabel">From:</label>
+			<input type="text" list="From" id="FromInput" class="dest" placeholder="From" />
+	          <datalist id="From">
+	            {% for i in airport %}
+	            <option>{{i.airport}} {{i.airportcode}}</option>
+	            {% endfor %}
+	          </datalist>
+		</div>
+
+		<div class="search-element non-element">
+			<span><i class="fas fa-exchange-alt"></i></span>
+		</div>
+
+		<div class="search-element">
+			<label id="tolabel">To:</label>
+			<input type="text" list="To" id="ToInput" class="dest" placeholder="To" />
+	          <datalist id="To">
+	           {% for i in airport %}
+	            <option>{{i.airport}} {{i.airportcode}}</option>
+	            {% endfor %}
+	          </datalist>
+		</div>
+
+		<div class="search-element">
+			<label for="Departure_Date" id="Departure_Date_label">Departure Date:</label><br>
+	        <input type="date" id="Departure_Date" name="birthday">
+		</div>
+
+		<div class="search-element">
+			<label for="Return_Date" id="Return_Date_label">Return Date:</label><br>
+	        <input type="date" id="Return_Date" name="birthday" disabled>
+		</div>
+
+		<div class="search-element">
+			<label for="travelClass" id="travelClassLabel">Traveller, Class:</label><br>
+	         <input type="text" name="travelClass" class="input_design" id="travelClass" value="1 Traveller, Economy" readonly><br>
+	           <div class="travelClassEditor" id="travelClassEditor">
+	           		<p><label>Adults:</label>&nbsp;&nbsp;&nbsp;&nbsp; <button class="minus"  id="AValueMinus">-</button> <span class="AValue" id="AValue">1</span> <button class="add" id="AValueAdd">+</button> <span class="AValueDetails">(Above 12 years)</span></p>
+	           		<p><label>Children:</label> <button class="minus"  id="CValueMinus">-</button> <span class="AValue"   id="CValue">0</span> <button class="add"   id="CValueAdd">+</button> <span class="AValueDetails">(2-12 years)</span></p>
+	           		<p><label>Infants:</label>&nbsp;&nbsp;&nbsp;&nbsp; <button class="minus" id="IValueMinus">-</button> <span class="AValue" id="IValue">0</span> <button class="add" id="IValueAdd">+</button> <span class="AValueDetails">(Below 2 years)</span></p>
+	           		<hr>
+	           		<form name="abc">
+	           		<input type="radio" name="travelClassRadio" id="travelClassRadio1" value="Economy" checked><label class="travelClassRadio-label">Economy</label><br>
+			      <input type="radio" name="travelClassRadio" id="travelClassRadio2" value="Premium Economy" ><label class="travelClassRadio-label">Premium Economy</label><br>
+			      <input type="radio" name="travelClassRadio" id="travelClassRadio3" value="Business Class" ><label class="travelClassRadio-label">Business Class</label></form>
+			      <hr>
+			      <button id="done-btn">Done</button>
+	           </div>
+		</div>
+
+		<div class="search-element btn-element">
+			<input type="submit" name="submit" id="submit" value="search">
+		</div>
+
+	</div>
+</div>
+<!--search end -->
+
+<div class="container-fluid flightsearch">
+<h3>Showing {{numFlight}} Flights Available</h3>
+	<div class="flightresult-extra">
+		<div class="result-element" style="border-top-left-radius: 15px;">
+			
+		</div>
+
+		<div class="result-element f-element">
+			<p class="f-label"><span id="fromDest">{{departure.place}}</span> to <span id="toDest">{{arrival.place}}</span></p>
+		</div>
+
+		<div class="result-element">
+			<p class="f-label">Flight Number</p>
+		</div>
+
+		<div class="result-element">
+			<p class="f-label">Departure</p>
+		</div>
+
+		<div class="result-element">
+			
+		</div>
+
+		<div class="result-element s-element">
+			<p class="f-label">Arrival</p>
+		</div>
+
+		<div class="result-element">
+			<p class="f-label">Duration</p>
+		</div>
+
+		<div class="result-element">
+			<p class="f-label">Price</p>
+		</div>
+
+		<div class="result-element">
+			
+		</div>
+		
+	</div>
+
+	{% for i in flight %}
+
+	<div class="flightresult">
+		<div class="result-element" style="border-top-left-radius: 15px;">
+			<img src="{{i.image.url}}" class="logo-thumb">
+		</div>
+
+		<div class="result-element">
+			<p class="flightname">{{i.fligthname}}</p>
+		</div>
+
+		<div class="result-element">
+			<p class="flightnum">{{i.flightnum}}</p>
+		</div>
+
+		<div class="result-element">
+			<p class="flighttime">{{i.depttime}}</p>
+			<p class="flightdest" id="from-p{{i.id}}">{{departure.place}}</p>
+		</div>
+
+		<div class="result-element">
+			<p class="dash">-</p>
+		</div>
+
+		<div class="result-element">
+			<p class="flighttime">{{i.arrtime}}</p>
+			<p class="flightdest" id="to-p{{i.id}}">{{arrival.place}}</p>
+		</div>
+
+		<div class="result-element">
+			<p class="duration">{{i.duration}}</p>
+		</div>
+
+		<div class="result-element">
+			<p class="price">{{i.price}}</p>
+		</div>
+
+		<div class="result-element">
+			<a href="/flightconfirm/{{i.flightnum}}/{{departure.place}}/{{arrival.place}}/" class="book-btn">Book ></a>
+		</div>
+		
+	</div>
+	
+	{% endfor %}
+
+</div>
+<!--flightsearch end -->
+
+{% endblock %}
+
+{% block js %}
+
+<script type="text/javascript">
+	
+	var travelClass = document.getElementById('travelClass');
+	var travelClassEditor = document.getElementById('travelClassEditor');
+	var done_btn = document.getElementById('done-btn');
+
+	travelClass.addEventListener("click", displaytravelClass);
+
+	function displaytravelClass() {
+	  travelClassEditor.style.display = "block";
+	  travelClass.style.borderBottom = "2px solid #5f74f9";
+	}
+
+	done_btn.addEventListener("click", hidetravelClass);
+
+	function hidetravelClass() {
+	  travelClassEditor.style.display = "none";
+	} 
+
+	var roundtrip = document.getElementById('roundtrip')
+	var oneway = document.getElementById('oneway')
+
+	roundtrip.addEventListener("click", displayReturnDate);
+
+	function displayReturnDate() {
+	  document.getElementById('Return_Date').disabled = false;
+	}
+
+	oneway.addEventListener("click", hideReturnDate);
+
+	function hideReturnDate() {
+	  document.getElementById('Return_Date').disabled = true;
+	}
+
+	var re = /\d/;
+	if (!re.test(travelClass.value[1])) {
+	  travelClassInputNum = travelClass.value[0] + travelClass.value[1]
+	  travelClassInput = parseInt(travelClassInputNum)
+	} else {
+	  travelClassInput = travelClass.value[0];
+	}
+
+	var AValueAdd = document.getElementById('AValueAdd');
+	var AValueMinus = document.getElementById('AValueMinus');
+	var CValueAdd = document.getElementById('CValueAdd');
+	var CValueMinus = document.getElementById('CValueMinus');
+	var IValueAdd = document.getElementById('IValueAdd');
+	var IValueMinus = document.getElementById('IValueMinus');
+	var Departure_Date = document.getElementById('Departure_Date')
+	status = 'Economy';
+	AclickADD = 0;
+	CclickADD = -1;
+	IclickADD = -1;
+
+	AValueAdd.addEventListener("click", IncAValue);
+
+	function IncAValue() {
+		if (travelClassInput<8) {
+			inc = document.getElementById('AValue').innerHTML
+			 incValue = parseInt(inc)+1;
+			 AclickADD++;
+			 document.getElementById('AValue').innerHTML = incValue;
+			 travelClassInput = travelClassInput + 1;
+			 NewtravelClassInput = travelClassInput + ' Traveller, ' + status;
+			 travelClass.value = NewtravelClassInput
+		}
+	 
+	}
+
+	AValueMinus.addEventListener("click", DecAValue);
+
+	function DecAValue() {
+	 if(AclickADD>0) {
+	 	inc = document.getElementById('AValue').innerHTML
+	 	incValue = parseInt(inc)-1;
+	  document.getElementById('AValue').innerHTML = incValue;
+	  AclickADD--;
+	  travelClassInput = travelClassInput - 1;
+		 if (travelClassInput <= 0) {
+		  NewtravelClassInput = 1 + ' Traveller, ' + status;
+		   travelClass.value = NewtravelClassInput
+		 } else {
+		  NewtravelClassInput = travelClassInput + ' Traveller, ' + status;
+		 travelClass.value = NewtravelClassInput
+		 }
+	 }
+	 
+	}
+
+	CValueAdd.addEventListener("click", IncCValue);
+
+	function IncCValue() {
+		if (travelClassInput<8) {
+			inc = document.getElementById('CValue').innerHTML
+			 incValue = parseInt(inc)+1;
+			 CclickADD++;
+			 document.getElementById('CValue').innerHTML = incValue;
+			 travelClassInput = travelClassInput + 1;
+			 NewtravelClassInput = travelClassInput + ' Traveller, ' + status;
+			 travelClass.value = NewtravelClassInput
+				}
+			 
+	}
+
+	CValueMinus.addEventListener("click", DecCValue);
+
+	function DecCValue() {
+	 
+	 if(CclickADD>-1) {
+	 	inc = document.getElementById('CValue').innerHTML
+	 	incValue = parseInt(inc)-1;
+	  document.getElementById('CValue').innerHTML = incValue;
+	  CclickADD--;
+	  travelClassInput = travelClassInput - 1;
+		 if (travelClassInput <= 0) {
+		  NewtravelClassInput = 1 + ' Traveller, ' + status;
+		   travelClass.value = NewtravelClassInput
+		 } else {
+		  NewtravelClassInput = travelClassInput + ' Traveller, ' + status;
+		 travelClass.value = NewtravelClassInput
+		 }
+	 }
+	  
+	}
+
+	IValueAdd.addEventListener("click", IncIValue);
+
+	function IncIValue() {
+		if (travelClassInput<8) {
+			inc = document.getElementById('IValue').innerHTML
+			 incValue = parseInt(inc)+1;
+			 IclickADD++;
+			 document.getElementById('IValue').innerHTML = incValue;
+			 travelClassInput = travelClassInput + 1;
+			 NewtravelClassInput = travelClassInput + ' Traveller, ' + status;
+			 travelClass.value = NewtravelClassInput
+		}
+	 
+	}
+
+	IValueMinus.addEventListener("click", DecIValue);
+
+	function DecIValue() {
+	 
+	 if(IclickADD>-1) {
+	 	inc = document.getElementById('IValue').innerHTML
+	 	incValue = parseInt(inc)-1;
+	  document.getElementById('IValue').innerHTML = incValue;
+	  IclickADD--;
+	  travelClassInput = travelClassInput - 1;
+		 if (travelClassInput <= 0) {
+		  NewtravelClassInput = 1 + ' Traveller, ' + status;
+		   travelClass.value = NewtravelClassInput
+		 } else {
+		  NewtravelClassInput = travelClassInput + ' Traveller, ' + status;
+		 travelClass.value = NewtravelClassInput
+		 }
+	 }
+	 
+	}
+
+	var travelClassRadio1 = document.getElementById('travelClassRadio1');
+	var travelClassRadio2 = document.getElementById('travelClassRadio2');
+	var travelClassRadio3 = document.getElementById('travelClassRadio3');
+
+	travelClassRadio1.addEventListener("click", TravelClassValue1);
+	travelClassRadio2.addEventListener("click", TravelClassValue2);
+	travelClassRadio3.addEventListener("click", TravelClassValue3);
+
+	function TravelClassValue1() {
+		status = 'Economy';
+	 NewtravelClassInput = travelClassInput + ' Traveller, ' + status;
+	 travelClass.value = NewtravelClassInput
+	}
+	function TravelClassValue2() {
+		status = 'Premium Economy';
+	 NewtravelClassInput = travelClassInput + ' Traveller, ' + status;
+	 travelClass.value = NewtravelClassInput
+	}
+	function TravelClassValue3() {
+		status = 'Business Class';
+	 NewtravelClassInput = travelClassInput + ' Traveller, ' + status;
+	 travelClass.value = NewtravelClassInput
+	}
+
+
+	function myFunction(){
+	  var date = new Date();
+		        month = '' + (date.getMonth() + 1);
+		        day = '' + date.getDate();
+		        year = date.getFullYear();
+
+			    if (month.length < 2) 
+			        month = '0' + month;
+			    if (day.length < 2) 
+			        day = '0' + day;
+
+			    MinDate =  [year, month, day].join('-');
+			  Departure_Date.setAttribute("min", MinDate);
+			  document.getElementById('Return_Date').setAttribute("min", MinDate);
+			  Departure_Date.valueAsDate = date
+			  document.getElementById('Return_Date').valueAsDate = date;
+			  document.getElementById('FromInput').value = '{{departure.airport}} '+'{{departure.airportcode}}';
+			  document.getElementById('ToInput').value = '{{arrival.airport}} '+'{{arrival.airportcode}}';
+
+			  var flightSearchDetails = {
+				formInput : FromInput.value,
+				toInput : ToInput.value,
+				DeparturDate : Departure_Date.valueAsDate,
+				ArrivalDate : document.getElementById('Return_Date').valueAsDate,
+				travelInput : travelClassInput,
+				Status : status,
+				AValue : document.getElementById('AValue').innerHTML,
+				Aclick : AclickADD,
+				CValue : document.getElementById('CValue').innerHTML,
+				Cclick : CclickADD,
+				IValue : document.getElementById('IValue').innerHTML,
+				Iclick : IclickADD,
+			}
+
+			localStorage.setItem('flightSearchDetails', JSON.stringify(flightSearchDetails));
+
+
+
+	}
+
+
+	var FromInput = document.getElementById('FromInput');
+	var ToInput = document.getElementById('ToInput');
+	var noti = document.getElementById('noti');
+	var submit = document.getElementById('submit')
+	submit.addEventListener("click", SubmitFuncion);
+	function SubmitFuncion(){
+		if (FromInput.value.length == 0) {
+			FromInput.setAttribute("style", "border-bottom: 2px solid red;");
+		}else if (ToInput.value.length == 0) {
+			FromInput.setAttribute("style", "border-bottom: 1px solid grey;");
+			ToInput.setAttribute("style", "border-bottom: 2px solid red;");
+		}else{
+			ToInput.setAttribute("style", "border-bottom: 1px solid grey;");
+			var flightSearchDetails = {
+				formInput : FromInput.value,
+				toInput : ToInput.value,
+				DeparturDate : Departure_Date.valueAsDate,
+				ArrivalDate : document.getElementById('Return_Date').valueAsDate,
+				travelInput : travelClassInput,
+				Status : status,
+				AValue : document.getElementById('AValue').innerHTML,
+				Aclick : AclickADD,
+				CValue : document.getElementById('CValue').innerHTML,
+				Cclick : CclickADD,
+				IValue : document.getElementById('IValue').innerHTML,
+				Iclick : IclickADD,
+			}
+
+			localStorage.setItem('flightSearchDetails', JSON.stringify(flightSearchDetails));
+
+			window.location.href = '/flightsearch/'+FromInput.value+'/'+ToInput.value+'/'
+
+		}
+		
+			
+		
+	}
+	
+
+</script>
+
+{% endblock %}

@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% block css%}
+<link rel="stylesheet" type="text/css" href="{% static 'css/offer.css'%}">
+{% endblock%}
+
+{% block content %}
+<div class="container-fluid offer-container">
+	<div class="container offer-content">
+		<div class="offer">
+			<img src="{{offer.image.url}}">
+			<h4>Daily Offer</h4>
+			<h6>Exclusive Offer for {{offer.name}} Users</h6>
+			<p>{{offer.desc}}</p>
+			<h6>{{offer.promo}}</h6>
+			<button id="book-btn" onclick="window.location.href = '/'">Book Now</button>
+			<p class="small-p">Offer Valid Only If Payment Made Using {{offer.mode}}</p>
+		</div>
+	</div>
+	<div class="container offer-detail">
+		<h6>Best Flight Booking Offers & Deals</h6>
+		<p>Travelling by air can be fun and stress-free. It is time to make your travel blissful with your loved ones than ever with TripSkip. We bring you an amazing solution for saving more on flight bookings. If you are a travel person and use flights for every plan then at TripSkip we have some best deals and exclusive flight ticket offers. Forget the burden of expensive flight tickets and avail jaw-dropping cheap flight booking offers & flight discounts and save money on flight bookings.</p>
+		<h6>Fly with Great Saving - Enjoy Exciting Flight Offers Today at TripSkip</h6>
+		<p>When you are travelling by air, getting the cheap air tickets is an important requirement that saves your pockets. Air tickets are no doubt the most significant part of travel expense. We at TripSkip make your travel booking an easier one. The travellers can save more on the ticket booking with various offers on flight tickets available for both domestic and international flights. Enjoy the benefit of latest flight offers and cashback offers while booking flights online at TripSkip. Select from the vast array of coupons & deals and fly to your destination at the best price. If you want to enjoy an affordable fare this is the best time to grab the finest flight ticket offer. Book your flight tickets today at TripSkip as it is quick, easy and convenient.</p>
+		<h6>Latest Flight Discounts and Cashback Offers at your Fingertips</h6>
+		<p>Enjoy exclusive offers on flight tickets and save money while booking flight tickets online at TripSkip. We are a convenient platform for our valuable customers where discounts are incredible on several airlines during all seasons & routes. Flight booking was never this easy before, with us you can save your time, money and efforts. TripSkip is reliable source for booking flight tickets and moreover, you get great value for the money you spend through lucrative flight discounts & flight deals.</p>
+		<p>So, explore TripSkip and book your choice of seats along with exclusive flight booking offers today!</p>
+	</div>
+	
+</div>
+<!--offer ends -->
+
+{% endblock%}

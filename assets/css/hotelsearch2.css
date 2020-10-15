@@ -1,0 +1,316 @@
+body{
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	background-color: #eeeef0;
+}
+nav{
+	width: 100%;
+	min-height: 85px;
+	background-color: #f6fafa;
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 999;
+}
+.logo{
+	width: 30%;
+	min-height: 60px;
+	float: left;
+	margin-top: 10px;
+}
+.logo img{
+	float: left;
+	width: 20%;
+	height: 55px;
+}
+.logo span{
+	float: left;
+	font-size: 25px;
+	margin-top: 10px;
+	margin-left: -10px;
+	color: #5f74f9;
+	font-weight: bold;
+}
+.menu{
+	width: 50%;
+	min-height: 60px;
+	float: right;
+	margin-top: 15px;
+}
+.menu ul{
+	float: right;
+	margin-top: 10px;
+}
+.menu .Nav-li{
+	display: inline-block;
+}
+.menu .Nav-li-a{
+	font-size: 20px;
+	margin-right: 35px;
+	color: #5ea2f9;
+	text-decoration: none;
+	transition: all 0.2s;
+}
+.menu .Nav-li-user{
+	font-size: 20px;
+	margin-right: 35px;
+	color: #5ea2f9;
+	text-decoration: none;
+	transition: all 0.2s;
+}
+.menu .Nav-li-a.active{
+	color: #5f74f9;
+	border-bottom: 2px solid #5f74f9;
+	padding-bottom: 15px;
+}
+.menu .Nav-li-a:hover{
+	color: #5f74f9;
+	border-bottom: 2px solid #5f74f9;
+	padding-bottom: 15px;
+}
+
+/*nav ends */
+
+.result-container{
+	min-height: 550px;
+	margin-top: 85px;
+}
+.result-container h3{
+	font-weight: bolder;
+	color: #5f74f9;
+	margin-left: 8%;
+	padding-top: 15px;
+}
+.result-container .price{
+	margin-left: 8%;
+}
+.result-div{
+	min-height: 500px;
+	max-width: 1250px;
+	position: relative;
+}
+
+#fixed_div{
+	background-color: #fff;
+	height: calc(122vh - 100px);
+	width: 30%;
+	margin-right:  50px;
+	margin-top: 15px;
+	border-radius: 10px;
+	float: left;
+	position: sticky;
+}
+.filter-head{
+	font-size: 30px;
+	font-weight: bolder;
+	padding: 10px;
+	border-bottom: 5px solid #eeeef0;
+}
+.filter-price{
+	font-size: 20px;
+	font-weight: bolder;
+	padding-top: 10px;
+	padding-left: 10px;
+}
+.pricerange{
+	margin-left: 15px;
+	margin-top: -10px;
+	margin-right: 10px;
+}
+#fixed_div form{
+	padding-bottom: 10px;
+	border-bottom: 5px solid #eeeef0; 
+}
+.pricerangelabel .fa-star{
+	color: #FFD700;
+}
+.searchresult-div{
+	min-height: 450px;
+	width: 66% !important;
+	float: right;
+	
+
+}
+.hotel-result{
+	width: 100%;
+	min-height: 300px;
+	padding: 0;
+	border-radius: 20px;
+	margin-top: 15px;
+}
+.hotel-result:hover{
+	cursor: pointer;
+}
+.hotel-pic{
+	width: 35%;
+	float: left;
+	min-height: 250px;
+}
+.hotel-pic img{
+	width: 100%;
+	height: 300px;
+	border-top-left-radius: 10px;
+	border-bottom-left-radius: 10px;
+}
+.hotel-desc{
+	width: 45%;
+	float: left;
+	background-color:#fff;
+	min-height: 300px;
+	padding-top: 20px;
+	padding-left: 20px;
+}
+.rating{
+	background-color: #5f74f9;
+	color: #fff;
+	display: inline;
+	padding: 5px;
+	border-radius: 5px;
+}
+.hotel-desc h5{
+	margin-top: 15px;
+	font-size: 25px;
+	font-weight: bold;
+}
+.loc{
+	color: #a2a2a4;
+	font-size: 17px;
+}
+.amenities{
+	color: #a2a2a4;
+	font-size: 14px;
+}
+.hotel-btn{
+	width: 20%;
+	float: left;
+	background-color:#e8eafa;
+	min-height: 300px;
+	border-top-right-radius: 10px;
+	border-bottom-right-radius: 10px;
+}
+.hotel-btn p{
+	color: #a2a2a4;
+	font-size: 14px;
+	padding-top: 170px;
+	margin-left: 40%;
+}
+.hotel-btn h4{
+	font-weight: bold;
+	margin-top: -15px;
+	margin-left: 30%;
+}
+.room-btn{
+	background-color: #fff;
+	color: #5f74f9;
+	border:1px solid #5f74f9;
+	padding: 5px;
+	padding-left: 25px;
+	padding-right: 25px;
+	transition: all 0.3s;
+	margin-left: 7%;
+	margin-top: 10px;
+	text-decoration: none;
+}
+
+.room-btn:hover{
+	background-color: #5f74f9;
+	color: #fff;
+	text-decoration: none;
+	border:1px solid #5f74f9;
+	padding: 5px;
+	padding-left: 25px;
+	padding-right: 25px;
+	transition: all 0.3s;
+	margin-left: 7%;
+	margin-top: 10px;
+}
+
+/* result end */
+
+
+footer{
+	width: 100%;
+	min-height: 120px;
+	background-color: #f6fafa;
+	margin-top: 50px;
+}
+.logo-footer{
+	width: 30%;
+	min-height: 60px;
+	float: left;
+	margin-top: 20px;
+	margin-left: 100px;
+}
+.logo-footer img{
+	float: left;
+	width: 20%;
+	height: 55px;
+	margin-left: 25px;
+}
+.logo-footer span{
+	float: left;
+	font-size: 25px;
+	margin-top: 10px;
+	margin-left: -10px;
+	color: #5f74f9;
+	font-weight: bold;
+}
+.copy-footer{
+	width: 30%;
+	min-height: 60px;
+	float: left;
+	margin-top: 30px;
+	font-size: 24px;
+}
+.social-footer{
+	width: 30%;
+	min-height: 60px;
+	float: left;
+	margin-top: 10px;
+	text-align: center;
+}
+.social-footer h6{
+	font-size: 20px;
+	font-weight: bold;
+	color: grey;
+}
+.fa-facebook,.fa-twitter,.fa-youtube,.fa-linkedin,.fa-instagram{
+	border:1px solid grey;
+	font-size: 40px;
+	font-weight: bold;
+	color: grey;
+	transition: all 1s;
+	padding: 10px;
+	border-radius: 30px;
+}
+.fa-facebook:hover{
+	color: #fff;
+	border:1px solid #4267B2;
+	background-color: #4267B2;
+	transform: rotate(360deg);
+}
+.fa-twitter:hover{
+	color: #fff;
+	border:1px solid #00acee;
+	background-color: #00acee;
+	transform: rotate(360deg);
+}
+.fa-youtube:hover{
+	color: #fff;
+	border:1px solid #FF0000;
+	background-color: #FF0000;
+	transform: rotate(360deg);
+}
+.fa-linkedin:hover{
+	color: #fff;
+	border:1px solid #0e76a8;
+	background-color: #0e76a8;
+	transform: rotate(360deg);
+}
+.fa-instagram:hover{
+	color: #fff;
+	border:1px solid #c13584;
+	background-color: #c13584;
+	transform: rotate(360deg);
+}

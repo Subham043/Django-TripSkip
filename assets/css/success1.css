@@ -1,0 +1,366 @@
+body{
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	background-color: #eeeef0;
+}
+
+nav{
+	width: 100%;
+	min-height: 85px;
+	background-color: #f6fafa;
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 999;
+}
+.logo{
+	width: 30%;
+	min-height: 60px;
+	float: left;
+	margin-top: 10px;
+}
+.logo img{
+	float: left;
+	width: 20%;
+	height: 55px;
+}
+.logo span{
+	float: left;
+	font-size: 25px;
+	margin-top: 10px;
+	margin-left: -10px;
+	color: #5f74f9;
+	font-weight: bold;
+}
+.menu{
+	width: 50%;
+	min-height: 60px;
+	float: right;
+	margin-top: 15px;
+}
+.menu ul{
+	float: right;
+	margin-top: 10px;
+}
+.menu .Nav-li{
+	display: inline-block;
+}
+.menu .Nav-li-a{
+	font-size: 20px;
+	margin-right: 35px;
+	color: #5ea2f9;
+	text-decoration: none;
+	transition: all 0.2s;
+}
+.menu .Nav-li-user{
+	font-size: 20px;
+	margin-right: 35px;
+	color: #5ea2f9;
+	text-decoration: none;
+	transition: all 0.2s;
+}
+.menu .Nav-li-a.active{
+	color: #5f74f9;
+	border-bottom: 2px solid #5f74f9;
+	padding-bottom: 15px;
+}
+.menu .Nav-li-a:hover{
+	color: #5f74f9;
+	border-bottom: 2px solid #5f74f9;
+	padding-bottom: 15px;
+}
+
+/*nav ends */
+.main-content{
+	background-color: #fff;
+}
+.headerpic{
+	width: 100%;
+	min-height: 100px;
+}
+.ticketLogo{
+	width: 30%;
+	min-height: 100px;
+	float: left;
+}
+.ticketLogo img{
+	width: 25%;
+	margin-top: 10px;
+	margin-left: 20px;
+	float: left;
+}
+.ticketLogo span{
+	float: left;
+	font-size: 25px;
+	margin-top: 30px;
+	margin-left: 10px;
+	color: #5f74f9;
+	font-weight: bold;
+}
+.ticketId{
+	width: 30%;
+	min-height: 100px;
+	float: left;
+	text-align: right;
+	margin-left: 5px;
+}
+.ticketId p {
+	color: #8e9093;
+	margin-top: 10px;
+}
+.ticketId h5 {
+	color: #5f74f9;
+	font-weight: bold;
+}
+.tickethelp{
+	width: 30%;
+	min-height: 100px;
+	float: left;
+	text-align: right;
+	margin-left: 90px;
+}
+.tickethelp p {
+	color: #8e9093;
+	margin-top: 10px;
+}
+.tickethelp h5 {
+	color: #5f74f9;
+	font-weight: bold;
+}
+.textbody{
+	width: 100%;
+	background-color: #fff;
+	padding-top: 25px;
+	padding-left: 10px;
+}
+.textbody h4{
+	font-weight: bold;
+	font-size: 20px;
+}
+.textbody p{
+	font-size: 20px;
+}
+.ticketbody{
+	width: 60%;
+	background-color: #d7def2;
+	margin-left: 20%;
+	border-radius: 10px;
+}
+.ticketbody-top{
+	width: 100%;
+	min-height: 80px;
+	border-bottom: 2px solid grey;
+}
+.pleft{
+	float: left;
+	font-size: 25px;
+	margin-left: 15px;
+	margin-top: 20px;
+}
+.pright{
+	float: right;
+	font-size: 25px;
+	color: #5f74f9;
+	margin-right: 15px;
+	margin-top: 20px;
+}
+.ticketbody-middle{
+	width: 100%;
+	min-height: 280px;
+	border-bottom: 2px solid grey;
+}
+.flightImage{
+	width: 100%;
+	min-height: 70px;
+}
+.flightImage img{
+	width: 25%;
+	float: left;
+	padding-left: 15px;
+	padding-top: 10px;
+}
+.flightImage p{
+	font-size: 23px;
+	padding-top: 15px;
+	float: left;
+	padding-left: 10px;
+}
+.flightdep{
+	float: left;
+	width: 33%;
+	min-height: 200px;
+	text-align: left;
+	margin-left: 12px;
+	padding-top: 10px;
+}
+.duration{
+	float: left;
+	width: 30%;
+	min-height: 200px;
+	text-align: center;
+	padding-top: 20px;
+}
+.fa-clock{
+	font-size: 40px;
+}
+.flightarr{
+	float: left;
+	width: 33%;
+	min-height: 200px;
+	text-align: right;
+	padding-top: 10px;
+}
+.ticketbody-low{
+	width: 100%;
+	min-height: 150px;
+	border-bottom-left-radius: 10px;
+}
+.trav{
+	float: left;
+	text-align: left;
+	padding-left: 15px;
+}
+.trav h4{
+	margin-top: 5px;
+}
+.trav h5{
+	margin-top: 10px;
+	font-weight: bold;
+	color: #5f74f9;
+}
+.ticketno{
+	float: right;
+	text-align: right;
+	padding-right: 15px;
+}
+.ticketno h4{
+	margin-top: 5px;
+}
+.ticketno h5{
+	margin-top: 10px;
+	font-weight: bold;
+	color: #5f74f9;
+}
+.textbody2{
+		width: 60%;
+	margin-left: 20%;
+	padding-top: 20px;
+}
+.textbody2 p{
+	font-size: 20px;
+	font-weight: bold;
+	margin-left: 15px;
+}
+.textbody2 ul li{
+	padding: 15px;
+	font-size: 20px;
+}
+#preview{
+	margin-top: 20px;
+	margin-bottom: 20px;
+	margin-left: 45%
+	background-color: #fff;
+	color: #5f74f9;
+	outline: none;
+	border:1px solid #5f74f9;
+	padding: 15px;
+	font-size: 20px;
+	transition: all 1s;
+}
+
+#preview:hover{
+	color: #fff;
+	background-color: #5f74f9;
+}
+
+
+
+
+
+
+
+footer{
+	width: 100%;
+	min-height: 120px;
+	background-color: #f6fafa;
+}
+.logo-footer{
+	width: 30%;
+	min-height: 60px;
+	float: left;
+	margin-top: 20px;
+	margin-left: 100px;
+}
+.logo-footer img{
+	float: left;
+	width: 20%;
+	height: 55px;
+	margin-left: 25px;
+}
+.logo-footer span{
+	float: left;
+	font-size: 25px;
+	margin-top: 10px;
+	margin-left: -10px;
+	color: #5f74f9;
+	font-weight: bold;
+}
+.copy-footer{
+	width: 30%;
+	min-height: 60px;
+	float: left;
+	margin-top: 30px;
+	font-size: 24px;
+}
+.social-footer{
+	width: 30%;
+	min-height: 60px;
+	float: left;
+	margin-top: 10px;
+	text-align: center;
+}
+.social-footer h6{
+	font-size: 20px;
+	font-weight: bold;
+	color: grey;
+}
+.fa-facebook,.fa-twitter,.fa-youtube,.fa-linkedin,.fa-instagram{
+	border:1px solid grey;
+	font-size: 40px;
+	font-weight: bold;
+	color: grey;
+	transition: all 1s;
+	padding: 10px;
+	border-radius: 30px;
+}
+.fa-facebook:hover{
+	color: #fff;
+	border:1px solid #4267B2;
+	background-color: #4267B2;
+	transform: rotate(360deg);
+}
+.fa-twitter:hover{
+	color: #fff;
+	border:1px solid #00acee;
+	background-color: #00acee;
+	transform: rotate(360deg);
+}
+.fa-youtube:hover{
+	color: #fff;
+	border:1px solid #FF0000;
+	background-color: #FF0000;
+	transform: rotate(360deg);
+}
+.fa-linkedin:hover{
+	color: #fff;
+	border:1px solid #0e76a8;
+	background-color: #0e76a8;
+	transform: rotate(360deg);
+}
+.fa-instagram:hover{
+	color: #fff;
+	border:1px solid #c13584;
+	background-color: #c13584;
+	transform: rotate(360deg);
+}

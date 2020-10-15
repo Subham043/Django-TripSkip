@@ -1,0 +1,85 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+	<title>TripSkip</title>
+	 <link rel="icon" href="{% static 'images/globe.svg'%}" type="image/gif" sizes="16x16"> 
+	<!-- CSS only -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+<!-- JS, Popper.js, and jQuery -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.0/css/all.css" integrity="sha384-OLYO0LymqQ+uHXELyx93kblK5YIS3B2ZfLGBmsJaUyor7CpMTBsahDHByqSuWW+q" crossorigin="anonymous">
+
+<script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+{% block css%}
+
+{% endblock%}
+
+</head>
+<body {%block onload%} {%endblock%}>
+	<nav id="nav">
+	<div class="logo">
+		<img src="{% static 'images/globe.svg'%}"><span>TripSkip</span>
+	</div>
+	<div class="menu">
+		<ul>
+			<li class="Nav-li"><a class="Nav-li-a" href="/"><i class="fas fa-plane-departure"></i> Flight</a></li>
+			<li class="Nav-li"><a class="Nav-li-a" href="/Hotel/"><i class="fas fa-hotel"></i> Hotel</a></li>
+			<li class="Nav-li"><a class="Nav-li-a" href="/Support/"><i class="fas fa-headset"></i> Support</a></li>
+			{% if not user.is_authenticated %}
+			<li class="nav-item dropdown Nav-li">
+	        <a class="nav-link dropdown-toggle Nav-li-user" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	          <i class="fas fa-user-tie"></i> User
+	        </a>
+	        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+	          <a class="dropdown-item Nav-li-user" href="/accounts/login/">Sign In</a>
+	          <a class="dropdown-item Nav-li-user" href="/signup/">Sign Up</a>
+	        </div>
+	      </li>
+	      {% else %}
+	      <li class="nav-item dropdown Nav-li">
+	        <a class="nav-link dropdown-toggle Nav-li-user" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	          <i class="fas fa-user-tie"></i> {{request.user}}
+	        </a>
+	        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+	          <a class="dropdown-item Nav-li-user" href="/profile/{{request.user}}/">Profile</a>
+	          <a class="dropdown-item Nav-li-user" href="/logout/">Log Out</a>
+	        </div>
+	      </li>
+	      {% endif %}
+		</ul>
+	</div>
+</nav>
+<!--nav ends -->
+
+{% block content %}
+<!-- content here -->
+{% endblock %}
+
+
+
+
+<footer id="footer">
+	<div class="logo-footer">
+		<img src="{% static 'images/globe.svg'%}"><span>TripSkip</span>
+	</div>
+	<div class="copy-footer">
+		<p class="copy">&copy; TripSkip | All Rights Reserved</p>
+	</div>
+	<div class="social-footer">
+		<h6>FOLLOW US ON</h6>
+		<p><i class="fab fa-facebook"></i> <i class="fab fa-twitter"></i> <i class="fab fa-youtube"></i> <i class="fab fa-linkedin"></i> <i class="fab fa-instagram"></i></p>
+	</div>
+</footer>
+
+
+
+{% block js %}
+	  <!-- JavaScript content here -->
+{% endblock %}	
+
+</body>
+</html>

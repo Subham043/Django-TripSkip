@@ -1,0 +1,274 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% block css%}
+<link rel="stylesheet" type="text/css" href="{% static 'css/hotelbook2.css'%}">
+{% endblock%}
+
+{%block onload%}
+onscroll="myScrollFunction()" onload="myFunction()"
+{%endblock%}
+
+{% block content %}
+
+{% if payment %}
+	<div class="container-fluid" style="margin-top: 85px;height: 555px;">
+		<div class="alert alert-primary" role="alert">
+			Please Make the Payment To Successfully Book the Ticket: &nbsp;
+		<form action="/hotelbooked/" method="POST" id="PayForm">
+		<script
+		    src="https://checkout.razorpay.com/v1/checkout.js"
+		    data-key="rzp_test_NeysSsZI9pQXph" // Enter the Key ID generated from the Dashboard
+		    data-amount="{{payment.amount}}" // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+		    data-currency="INR"
+		    data-order_id="{{payment.id}}"//This is a sample Order ID. Pass the `id` obtained in the response of the previous step.
+		    data-buttontext="Pay with Razorpay"
+		    data-name="Tripskip Corp"
+		    data-description="Test transaction"
+		    data-image="https://example.com/your_logo.jpg"
+		    data-prefill.name="Gaurav Kumar"
+		    data-prefill.email="gaurav.kumar@example.com"
+		    data-prefill.contact="9999999999"
+		    data-theme.color="#F37254"
+		></script>
+		<input type="hidden" custom="Hidden Element" name="hidden">
+		</form>
+		</div>
+		</div>
+		{%else%}
+
+<div class="container-fluid main-container">
+	<div class="hotelreview-con">
+
+		<div class="hotelname">
+
+			<div class="hotelimage">
+				<img src="{{hotelList.image.url}}">
+			</div>
+
+			<div class="hoteldesc">
+				<p class="name">{{hotelList.name}}</p>
+				<p class="address">{{hotelList.location}}</p>
+			</div>
+
+		</div>
+
+		<div class="hotelcon">
+			
+			<div class="hoteldate">
+				<div class="date1">
+					<p class="check">Check-In</p>
+					<p class="checkdate" id="checkInDate"></p>
+				</div>
+				<div class="night">
+					<p class="nightp"><span class="nightspan" id="numNight"></span><br>Nights</p>
+				</div>
+				<div class="date2">
+					<p class="check">Check-Out</p>
+					<p class="checkdate" id="checkOutDate"></p>
+				</div>
+			</div>
+
+			<div class="hotelroom">
+				<div class="roomdiv">
+					<p class="roomtext">Total Rooms<br><span class="roomspan" id="roomspan"></span></p>
+				</div>
+				<div class="roomdiv">
+					<p class="roomtext">Total Adults<br><span class="roomspan" id="adultspan"></span></p>
+				</div>
+				<div class="roomdiv" style="border-right: none;">
+					<p class="roomtext">Total Children<br><span class="roomspan" id="childspan"></span></p>
+				</div>
+			</div>
+
+		</div>
+
+		<div class="guestdetail">
+			<p class="guest">Guest Detail</p>
+			<form>
+				<input type="text" name="fname" id="fname" placeholder="First Name" autofocus="" required="true">
+				<input type="text" name="lname" id="lname" placeholder="Last Name" required="true"><br>
+				<input type="tel" name="phone" id="phone" placeholder="Contact Number" required="true">
+				<input type="email" name="email" id="email" placeholder="Email" required="true">
+			</form>
+		</div>
+
+		<div class="hotelterms">
+			<p>Terms and conditions</p>
+			<ul>
+				<li>Guests may need ID proof with valid address, with city not same as that of hotel</li>
+				<li>Unmarried couples may not be allowed, no refund would be provided if hotel denies check-in in such cases</li>
+				<li>The Bed type is dependent upon the availability</li>
+			</ul>
+		</div>
+
+		<div class="cancel">
+			<p>Cancellation Policy</p>
+			<ul>
+				<li>This booking is non refundable. 100% penalty charges apply.</li>
+			</ul>
+		</div>
+		
+	</div>
+
+	<div class="hotelprice-con" id="hotelprice-con">
+		
+		<div class="paymentcon" id="paymentcon">
+			<p class="summary">Payment Summary</p>
+			<table cellpadding="3">
+				<tr>
+					<td class="left">Adult</td>
+					<td class="right" id="rightAdult"></td>
+				</tr>
+				<tr>
+					<td class="left">Children</td>
+					<td class="right" id="rightChild"></td>
+				</tr>
+				<tr>
+					<td class="left">Price/Night for 1 Room</td>
+					<td class="right" id="rightPrice"></td>
+				</tr>
+				<tr>
+					<td class="left"><b><span id="rightRoom"></span> x BedRooms,<br> for <span id="rightNumNight"></span> nights</b></td>
+					<td class="right"><b><span id="rightRoomPrice"></span></b></td>
+				</tr>
+				<tr>
+					<td class="left tax">Total Tax</td>
+					<td class="right tax" id="rightTax">Rs.5,760</td>
+				</tr>
+				<tr>
+					<td class="left total tborder1">Total</td>
+					<td class="right total tborder2" id="rightTotal">Rs.37,760</td>
+				</tr>
+			</table>
+
+			<p class="promo">Promocode</p>
+			<input type="text" name="promocode" id="promocode" placeholder="Enter Promocode">
+			<input type="submit" name="apply" id="apply" value="apply"><br>
+
+			<form  method="POST" onsubmit="return Submission()">{% csrf_token %}
+			<input type="hidden" name="customerUsername" id="customerUsername" value="{{request.user.username}}">
+			<input type="hidden" name="totalAmt" id="totalAmt">
+			<input type="hidden" name="tRoom" id="tRoom">
+			<input type="hidden" name="tAdults" id="tAdults">
+			<input type="hidden" name="tChild" id="tChild">
+			<input type="hidden" name="HotelName" id="HotelName" value="{{hotelList.name}}">
+			<input type="hidden" name="checkIn" id="checkIn">
+			<input type="hidden" name="checkOut" id="checkOut">
+			<input type="hidden" name="FirstName" id="FirstName">
+			<input type="hidden" name="LastName" id="LastName">
+			<input type="hidden" name="Email" id="Email" >
+			<input type="hidden" name="Phone" id="Phone" >
+			<input type="submit" name="pay" id="pay" value="Proceed To Pay">
+			</form>
+		</div>
+
+	</div>
+	
+</div>
+<!--hotel review end-->
+{% endif %}
+
+
+{% endblock %}
+
+{% block js %}
+<script type="text/javascript">
+
+
+
+function myScrollFunction() {
+	for(i = 0; i<= window.scrollY; i++){
+		document.getElementById('hotelprice-con').style.top = Math.max(i) + 'px';
+		document.getElementById('hotelprice-con').style.marginBottom = 30 + 'px';
+	}
+
+	
+}
+
+function myFunction(){
+	var retrievedObject = localStorage.getItem('HotelSearchDetails');
+	var HotelSearchDetails = JSON.parse(retrievedObject);
+	console.log(HotelSearchDetails)
+
+	document.getElementById('roomspan').innerHTML = HotelSearchDetails.AValue;
+	document.getElementById('adultspan').innerHTML = HotelSearchDetails.CValue;
+	document.getElementById('childspan').innerHTML = HotelSearchDetails.IValue;
+
+	var checkinDate = new Date(HotelSearchDetails.CheckInDate);
+	var checkoutDate = new Date(HotelSearchDetails.CheckOutDate);
+	 weekDay = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+	 monthName = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
+	 document.getElementById('checkInDate').innerHTML = checkinDate.getDate()+' '+monthName[checkinDate.getMonth()]+' '+weekDay[checkinDate.getDay()];
+	 document.getElementById('checkOutDate').innerHTML =  checkoutDate.getDate()+' '+monthName[checkoutDate.getMonth()]+' '+weekDay[checkoutDate.getDay()];
+
+	 document.getElementById('numNight').innerHTML= parseInt((new Date(HotelSearchDetails.CheckOutDate) - new Date(HotelSearchDetails.CheckInDate))/86400000)
+
+
+	 document.getElementById('rightPrice').innerHTML = parseFloat('{{hotelList.price}}').toFixed(2);
+	 document.getElementById('rightAdult').innerHTML = HotelSearchDetails.CValue;
+	 document.getElementById('rightChild').innerHTML = HotelSearchDetails.IValue;
+	 document.getElementById('rightRoom').innerHTML = HotelSearchDetails.AValue;
+	 document.getElementById('rightNumNight').innerHTML = parseInt((new Date(HotelSearchDetails.CheckOutDate) - new Date(HotelSearchDetails.CheckInDate))/86400000)
+	 document.getElementById('rightRoomPrice').innerHTML = parseFloat((parseFloat('{{hotelList.price}}') * parseFloat(HotelSearchDetails.AValue)) * document.getElementById('rightNumNight').innerHTML).toFixed(2);
+	 document.getElementById('rightTax').innerHTML = parseFloat((parseFloat('550') * parseFloat(HotelSearchDetails.AValue)) * document.getElementById('rightNumNight').innerHTML).toFixed(2);
+	 document.getElementById('rightTotal').innerHTML = parseFloat(parseFloat(document.getElementById('rightRoomPrice').innerHTML) + parseFloat(document.getElementById('rightTax').innerHTML)).toFixed(2);
+}
+
+
+function Submission(){
+		returnValue = true;
+		if (document.getElementById('fname').value == '') {
+			document.getElementById('fname').setAttribute("style", "border-bottom: 3px solid red;");
+			returnValue = false
+		}else {
+			document.getElementById('fname').setAttribute("style", "border-bottom: 1px solid black;");
+			returnValue = true
+		}
+
+		if (document.getElementById('lname').value == '') {
+			document.getElementById('lname').setAttribute("style", "border-bottom: 3px solid red;");
+			returnValue = false
+		}else {
+			document.getElementById('lname').setAttribute("style", "border-bottom: 1px solid black;");
+			returnValue = true
+		}
+
+		if (document.getElementById('email').value == '') {
+			document.getElementById('email').setAttribute("style", "border-bottom: 3px solid red;");
+			returnValue = false
+		}else {
+			document.getElementById('email').setAttribute("style", "border-bottom: 1px solid black;");
+			returnValue = true
+		}
+
+		if (document.getElementById('phone').value == '') {
+			document.getElementById('phone').setAttribute("style", "border-bottom: 3px solid red;");
+			returnValue = false
+		}else {
+			document.getElementById('phone').setAttribute("style", "border-bottom: 1px solid black;");
+			returnValue = true
+		}
+
+		document.getElementById('totalAmt').value = parseInt(parseFloat(parseFloat(document.getElementById('rightRoomPrice').innerHTML) + parseFloat(document.getElementById('rightTax').innerHTML)).toFixed(2));
+
+		document.getElementById('tRoom').value = document.getElementById('roomspan').innerHTML;
+		document.getElementById('tAdults').value = document.getElementById('adultspan').innerHTML;
+		document.getElementById('tChild').value = document.getElementById('childspan').innerHTML;
+
+		document.getElementById('checkIn').value = document.getElementById('checkInDate').innerHTML;
+		document.getElementById('checkOut').value = document.getElementById('checkOutDate').innerHTML;
+
+		document.getElementById('FirstName').value = document.getElementById('fname').value;
+		document.getElementById('LastName').value = document.getElementById('lname').value;
+
+		document.getElementById('Email').value = document.getElementById('email').value;
+		document.getElementById('Phone').value = document.getElementById('phone').value;
+
+		return returnValue;
+
+	}
+
+
+</script>
+{% endblock %}
